@@ -11,6 +11,7 @@ const renderVisualPosition=unitVisualPosition;unitVisualPosition=function(u,now)
 const androidFrameInterval=typeof navigator!=='undefined'&&/Android/i.test(navigator.userAgent||'')?1000/30:0;
 let lastWorldPaint=-Infinity;
 const indexedDraw=draw;draw=function(now){
+ constrainMapCamera();
  if(androidFrameInterval&&now>=lastWorldPaint&&now-lastWorldPaint<androidFrameInterval){
   requestAnimationFrame(draw);
   return;

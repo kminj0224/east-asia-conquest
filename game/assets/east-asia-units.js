@@ -30,7 +30,7 @@ const eastAsiaTankArt={
 // Divide out the native 1.4 armor scale, so it is applied exactly once.
 const EAST_ASIA_HULL_WIDTH=S*4/3+8;
 const EAST_ASIA_TANKS={
- '0:1':{source:'kr-tank',mx:2151,my:224,baseFacing:1},
+ '0:1':{source:'kr-tank',sizeScale:.9,mx:2151,my:224,baseFacing:1},
  '0:14':{source:'kr-elite',mx:8,my:282,baseFacing:-1},
  '2:1':{source:'jp-tank',mx:17,my:128,baseFacing:-1},
  '2:14':{source:'jp-elite',mx:14,my:326,baseFacing:-1}
@@ -38,10 +38,10 @@ const EAST_ASIA_TANKS={
 for(const a of Object.values(EAST_ASIA_TANKS)){
  const source=EAST_ASIA_UNIT_BOUNDS[a.source],hull=source.hullBounds;
  a.w=source.width;a.h=source.height;
- a.drawWidth=EAST_ASIA_HULL_WIDTH/HEAVY_UNIT_VISUAL_SCALE*a.w/(hull[2]-hull[0]);
+ a.drawWidth=EAST_ASIA_HULL_WIDTH*(a.sizeScale??1)/HEAVY_UNIT_VISUAL_SCALE*a.w/(hull[2]-hull[0]);
  a.drawX=-(hull[0]+hull[2])/2/a.w*a.drawWidth;
  a.yOffset=(a.h-source.opaqueBounds[3])/a.w*a.drawWidth;
- a.shadowWidth=EAST_ASIA_HULL_WIDTH*.45;
+ a.shadowWidth=EAST_ASIA_HULL_WIDTH*(a.sizeScale??1)*.45;
 }
 function eastAsiaUnitHasArt(u){return !!(infantryArtProfile(u)||EAST_ASIA_TANKS[u.f+':'+u.type])}
 isBaekTank=function(u){return !!EAST_ASIA_TANKS[u.f+':'+u.type]};
