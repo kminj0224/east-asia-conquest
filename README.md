@@ -1,3 +1,5 @@
+한국·일본 전차/정예전차 이미지를 최신 첨부본으로 교체하고, **차체 기준으로 타일 양끝보다 각각 4px 크게** 맞춘 v1.2.1입니다. [APK 릴리스](https://github.com/kminj0224/east-asia-conquest/releases/tag/v1.2.1). 포신과 투명 여백은 크기 기준에서 제외하며, 반전·반동·총구 섬광·피격 위치가 같은 배치 좌표를 사용합니다.
+
 한국·일본 소총수/전차/정예전차 이미지 및 테르하 원본 전투 효과를 추가한 **v1.2.0**입니다. [APK 릴리스](https://github.com/kminj0224/east-asia-conquest/releases/tag/v1.2.0). 원본 PNG 8개는 `game/assets/eastasia-*.png`, 연결 지침은 `art/east-asia-units/README.md`에 있습니다. 나머지 병종과 도시는 기존 도형 외형을 유지합니다.
 
 # 동아시아 콘퀘스트
