@@ -1,4 +1,4 @@
-name: National unit art and APK v1.2.0
+name: Hull-calibrated tanks and APK v1.2.1
 on:
   push:
     branches: [main]
@@ -78,14 +78,14 @@ jobs:
           git add game art tools audio qa data docs package.json package-lock.json build.py .gitignore AGENTS.md README.md
           git add -u .release-staging || true
           if ! git diff --cached --quiet; then
-            git commit -m 'Add original Korean and Japanese national unit art and native combat effects'
+            git commit -m 'Replace tank artwork and calibrate actual hull size to native hex geometry'
             git push origin HEAD:main
           fi
           echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: East-Asia-Conquest-v120-checks
+          name: East-Asia-Conquest-v121-checks
           path: |
             qa/east-asia-previews/*
             docs/map-report.json
@@ -96,6 +96,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           SOURCE_SHA: ${{ steps.source.outputs.sha }}
         run: |
-          if ! gh release view v1.2.0 >/dev/null 2>&1; then
-            gh release create v1.2.0 deliverables/East-Asia-Conquest-v1.2.0.apk deliverables/SHA256SUMS.txt qa/east-asia-previews/korea-game.png qa/east-asia-previews/east-asia-overview.png qa/east-asia-previews/unit-art.png qa/east-asia-previews/unit-art-game.png qa/east-asia-previews/unit-art-attack.png qa/east-asia-previews/unit-art-impact.png --target "$SOURCE_SHA" --title '동아시아 콘퀘스트 v1.2.0 — 한국·일본 유닛 이미지와 원본 전투 효과' --notes-file docs/releases/v1.2.0.md
+          if ! gh release view v1.2.1 >/dev/null 2>&1; then
+            gh release create v1.2.1 deliverables/East-Asia-Conquest-v1.2.1.apk deliverables/SHA256SUMS.txt qa/east-asia-previews/korea-game.png qa/east-asia-previews/east-asia-overview.png qa/east-asia-previews/unit-art.png qa/east-asia-previews/tank-fit.png qa/east-asia-previews/unit-art-game.png qa/east-asia-previews/unit-art-attack.png qa/east-asia-previews/unit-art-impact.png --target "$SOURCE_SHA" --title '동아시아 콘퀘스트 v1.2.1 — 새 전차 이미지와 차체 기준 크기 보정' --notes-file docs/releases/v1.2.1.md
           fi
