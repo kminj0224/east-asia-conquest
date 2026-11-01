@@ -1,6 +1,8 @@
 'use strict';
 const HEAVY_UNIT_VISUAL_SCALE=1.4,ATTACK_HELICOPTER_VISUAL_SCALE=1.3;
-function unitBodyVisualScale(u){return u.type===21?ATTACK_HELICOPTER_VISUAL_SCALE:HEAVY_UNIT_VISUAL_SCALE}
+// Restore the pre-v1.2.3 Korean tank first, then apply the requested increase.
+function tankVisualMultiplier(u){return [1,13,14].includes(u.type)?u.f===0&&u.type===1?1.06:1.1:1}
+function unitBodyVisualScale(u){return u.type===21?ATTACK_HELICOPTER_VISUAL_SCALE:HEAVY_UNIT_VISUAL_SCALE*tankVisualMultiplier(u)}
 function largeUnitVisual(u){return u.type===21||['armor','artillery'].includes(TYPES[u.type]?.branch)}
 function beginLargeUnitBody(u,bottom=14){ctx.save();if(largeUnitVisual(u)){ctx.translate(0,bottom);ctx.scale(unitBodyVisualScale(u),unitBodyVisualScale(u));ctx.translate(0,-bottom)}}
 function endLargeUnitBody(){ctx.restore()}
