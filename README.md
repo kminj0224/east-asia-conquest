@@ -4,7 +4,7 @@
 
 Terha Conquest v1.11.94의 게임 엔진·UI와 **원본 자연 지도 제작·영토색 합성·화면 캐시 경로**를 사용하는 동아시아 정복 게임입니다. 테르하 원본과 함께 설치할 수 있습니다.
 
-## v1.1.1 지도 전면 수정
+## v1.1.2 지도 전면 수정
 
 v1.0.0의 육각형 채색 지도와 문자 도형 표식을 제거했습니다. 원본의 중립색 고해상도 지도, 부드러운 해안선과 잔파도, 연결된 산·숲, 강의 샘플링과 수면 표현, 지면·수목·산악의 소속 마스크, 가까움/중간/전체 지도 해상도와 80 MiB 캐시를 그대로 사용합니다. 평소에는 육각형 격자를 그리지 않으며, 행동·선택 표시는 엔진의 실제 타일 좌표에 맞춰 표시합니다. 지형 이름을 지도에 덧쓰지 않습니다.
 
@@ -46,7 +46,7 @@ python3 build.py
 python3 qa/east-asia-apk.py
 ```
 
-실제 Chromium 검증은 Playwright와 Chromium 설치 후 `node qa/east-asia-browser.cjs`로 실행합니다. 결과 APK는 `deliverables/East-Asia-Conquest-v1.1.1.apk`입니다. 지도 배치가 달라져 v1.0.0의 작전 저장과 v1.1.1 작전 저장은 분리됩니다. 설정과 앱 설치 ID는 유지합니다.
+실제 Chromium 검증은 Playwright와 Chromium 설치 후 `node qa/east-asia-browser.cjs`로 실행합니다. 결과 APK는 `deliverables/East-Asia-Conquest-v1.1.2.apk`입니다. 지도 배치가 달라져 v1.0.0의 작전 저장과 v1.1.2 작전 저장은 분리됩니다. 설정과 앱 설치 ID는 유지합니다.
 
 지도 제작 지침은 [art/README.md](art/README.md), 수정 설명은 [docs/native-map-rework.md](docs/native-map-rework.md)에 있습니다. 물리 Android 기기 테스트는 별도로 필요합니다.
 

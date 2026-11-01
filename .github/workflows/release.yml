@@ -1,4 +1,4 @@
-name: Native terrain parity and APK v1.1.1
+name: Native terrain parity and APK v1.1.2
 on:
   push:
     branches: [main]
@@ -69,7 +69,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: East-Asia-Conquest-v111-checks
+          name: East-Asia-Conquest-v112-checks
           path: |
             qa/east-asia-previews/*
             docs/map-report.json
@@ -80,6 +80,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           SOURCE_SHA: ${{ steps.source.outputs.sha }}
         run: |
-          if ! gh release view v1.1.1 >/dev/null 2>&1; then
-            gh release create v1.1.1 deliverables/East-Asia-Conquest-v1.1.1.apk deliverables/SHA256SUMS.txt qa/east-asia-previews/korea-game.png qa/east-asia-previews/east-asia-overview.png --target "$SOURCE_SHA" --title '동아시아 콘퀘스트 v1.1.1 — 테르하 원본 지도 방식 복원' --notes-file docs/releases/v1.1.1.md
+          if ! gh release view v1.1.2 >/dev/null 2>&1; then
+            gh release create v1.1.2 deliverables/East-Asia-Conquest-v1.1.2.apk deliverables/SHA256SUMS.txt qa/east-asia-previews/korea-game.png qa/east-asia-previews/east-asia-overview.png --target "$SOURCE_SHA" --title '동아시아 콘퀘스트 v1.1.2 — 테르하 원본 지도 방식 복원' --notes-file docs/releases/v1.1.2.md
           fi

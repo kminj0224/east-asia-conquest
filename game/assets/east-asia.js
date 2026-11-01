@@ -22,7 +22,11 @@ photoCityProfile=()=>null;
 cityBuildingLayout=cityArtBuildingLayout;
 citySprite=cityArtSprite;
 // rifleSprite is the exact pre-image renderer: soldiers, barrels, wheels, wings and hulls.
-sprite=rifleSprite;
+const eastAsiaClassicBody=rifleSprite;
+sprite=function(u,p,now){
+ const previous=unitNameBeingDrawn;unitNameBeingDrawn=u;
+ try{return eastAsiaClassicBody(u,p,now)}finally{unitNameBeingDrawn=previous}
+};
 unitHitCenter=(u,now=performance.now())=>{const p=unitVisualPosition(u,now);return{x:p.x,y:p.y-12}};
 // Independent save identity, with original slots / snapshots and restoration rules.
 const eastAsiaSetup=setup;
