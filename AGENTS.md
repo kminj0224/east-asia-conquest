@@ -6,7 +6,7 @@
 - Map land budget is exactly 3672. Coordinates and city lists are in data/. Regenerate with python3 tools/east-asia/generate_map.py and node tools/east-asia/render_assets.cjs (requires shapely and @napi-rs/canvas).
 - Forest=2, mountain=3, river=4; rivers remain land and are impassable to naval units. River crossing uses infantry cost 2 / armor cost 3 except city crossings; aircraft/helicopters ignore terrain.
 - All countries begin neutral. No country-exclusive special unit may spawn, be produced, or enter AI procurement.
-- Use original terrain/ocean materials and UI. Units and cities use the actual pre-image Terha soldiers/vehicles/buildings, never letters inside symbols.
+- Use original terrain/ocean materials and UI. Korea/Japan rifle, tank and elite tank use user-supplied art with original combat effects. Other units and cities use actual pre-image Terha soldiers/vehicles/buildings, never letters inside symbols.
 - Follow art/README.md for the natural map. Neutral pigment atlas, smoothed SDF coast, original foam shader, connected-scenery, semantic ownership runs, 48 JPEG94 regions and 80MiB visible-region LRU are mandatory. Never draw a permanent hex grid or geography-name labels.
 - Exact pxy uses column parity: x=(col+2/3)*64, y=(row+.5+.5*(col&1))*55.43. Never use row-offset pointy hexes.
 - All 3672 land cells remain registered to the original hexPoints geometry. Run tools/east-asia/export_geography.cjs, tools/bake-aligned-map.cjs and tools/build-map-lods.cjs after map generation.

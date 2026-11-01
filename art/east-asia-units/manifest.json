@@ -1,0 +1,106 @@
+{
+  "kr-tank": {
+    "file": "eastasia-kr-tank.png",
+    "uploadedName": "1000068354.png",
+    "width": 2078,
+    "height": 732,
+    "opaqueBounds": [
+      44,
+      20,
+      2061,
+      721
+    ],
+    "sha256": "ad570ca359bba89a248edb8f5370e3f443370d4066059977cd8e3d6ec5a1800c"
+  },
+  "kr-elite": {
+    "file": "eastasia-kr-elite.png",
+    "uploadedName": "1000068359.png",
+    "width": 1942,
+    "height": 724,
+    "opaqueBounds": [
+      0,
+      4,
+      1937,
+      719
+    ],
+    "sha256": "4b09c5f2c42eef3f96956ce115a6460023fcde9cc0353ad76040f2842e6bebed"
+  },
+  "kr-rifle-idle": {
+    "file": "eastasia-kr-rifle-idle.png",
+    "uploadedName": "1000068344.png",
+    "width": 1448,
+    "height": 1086,
+    "opaqueBounds": [
+      40,
+      15,
+      1432,
+      1079
+    ],
+    "sha256": "948c0d1424574e4e679ea3d051a312caf967bbbe7d41f1fcf51c762beeb070f8"
+  },
+  "kr-rifle-fire": {
+    "file": "eastasia-kr-rifle-fire.png",
+    "uploadedName": "1000068367.png",
+    "width": 1448,
+    "height": 1086,
+    "opaqueBounds": [
+      39,
+      39,
+      1439,
+      1079
+    ],
+    "sha256": "98f191bcc805dcaebaf69fedfbe9a7a6abc9cddd0b423ff24fe5136f3db1e979"
+  },
+  "jp-tank": {
+    "file": "eastasia-jp-tank.png",
+    "uploadedName": "1000068356.png",
+    "width": 2094,
+    "height": 751,
+    "opaqueBounds": [
+      15,
+      9,
+      2079,
+      738
+    ],
+    "sha256": "c2520e2233b64411e61865889b901ca97bf48a01aaf711c521150b9eafdcfc4d"
+  },
+  "jp-elite": {
+    "file": "eastasia-jp-elite.png",
+    "uploadedName": "1000068358.png",
+    "width": 2172,
+    "height": 724,
+    "opaqueBounds": [
+      6,
+      10,
+      2161,
+      719
+    ],
+    "sha256": "b10aa4a8c10b42996507bb23e90a41219462eb40133dedf594d3640f7f19648c"
+  },
+  "jp-rifle-idle": {
+    "file": "eastasia-jp-rifle-idle.png",
+    "uploadedName": "1000068345.png",
+    "width": 1448,
+    "height": 1086,
+    "opaqueBounds": [
+      37,
+      11,
+      1432,
+      1080
+    ],
+    "sha256": "4eb5ef4df580c2f9a50d4a7c79e185c211a613c1346d2cbd60fed6c113510082"
+  },
+  "jp-rifle-fire": {
+    "file": "eastasia-jp-rifle-fire.png",
+    "uploadedName": "1000068366.png",
+    "width": 1491,
+    "height": 1024,
+    "opaqueBounds": [
+      8,
+      5,
+      1476,
+      1014
+    ],
+    "sha256": "b3685c90d8f0d3d9153abd4c2c46f71b7884b85c6650aac51bd335a2f96a8b28"
+  }
+}

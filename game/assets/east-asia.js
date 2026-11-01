@@ -23,11 +23,13 @@ cityBuildingLayout=cityArtBuildingLayout;
 citySprite=cityArtSprite;
 // rifleSprite is the exact pre-image renderer: soldiers, barrels, wheels, wings and hulls.
 const eastAsiaClassicBody=rifleSprite;
+const eastAsiaIllustratedBody=sprite;
+const eastAsiaNativeHitCenter=unitHitCenter;
 sprite=function(u,p,now){
  const previous=unitNameBeingDrawn;unitNameBeingDrawn=u;
- try{return eastAsiaClassicBody(u,p,now)}finally{unitNameBeingDrawn=previous}
+ try{return (eastAsiaUnitHasArt(u)?eastAsiaIllustratedBody:eastAsiaClassicBody)(u,p,now)}finally{unitNameBeingDrawn=previous}
 };
-unitHitCenter=(u,now=performance.now())=>{const p=unitVisualPosition(u,now);return{x:p.x,y:p.y-12}};
+unitHitCenter=(u,now=performance.now())=>{if(eastAsiaUnitHasArt(u)){const hit=eastAsiaNativeHitCenter(u,now);if(isBaekTank(u))hit.x+=baekTankRecoil(u,now)*unitBodyVisualScale(u);return hit;}const p=unitVisualPosition(u,now);return{x:p.x,y:p.y-12}};
 // Independent save identity, with original slots / snapshots and restoration rules.
 const eastAsiaSetup=setup;
 setup=function(...args){const result=eastAsiaSetup(...args);for(const q of cities){const seed=MAP.countryCities[q.origin].find(v=>v.tile===q.tile);if(seed)q.name=seed.name}units=units.filter(u=>TYPES[u.type].special===undefined);for(const f of [6,7])defeatedNotices.add(f);diplomacy=initialDiplomacy();buildRegions();save();updateHUD();return result};

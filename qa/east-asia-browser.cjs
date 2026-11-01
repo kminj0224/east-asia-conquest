@@ -12,5 +12,6 @@ const delay=ms=>new Promise(r=>setTimeout(r,ms));
  await page.evaluate(()=>{selected=null;panelOpen=false;refreshSelection();cam.x=WW/2;cam.y=HH/2;cam.z=Math.min(innerWidth/WW,innerHeight/HH)*.94});await delay(250);await page.screenshot({path:path.join(out,'east-asia-overview.png')});
  await page.evaluate(()=>{focusCapital();selected=null;panelOpen=false;refreshSelection()});await page.waitForFunction(()=>naturalDetailsReady());
  const pan=await page.evaluate(async()=>{for(let n=0;n<24;n++){cam.y+=12;await new Promise(requestAnimationFrame)}for(let n=0;n<24;n++){cam.y-=12;await new Promise(requestAnimationFrame)}return{bytes:naturalDetailBytes,chunks:naturalDetailCache.size}});assert(pan.bytes<=100*1024*1024,'bounded visible-region cache after panning');
+ await require('./east-asia-unit-browser.cjs')(page,out);
  assert.equal(errors.length,0,errors.join('\n'));fs.writeFileSync(path.join(out,'browser-report.json'),JSON.stringify({cache,timing,pan,errors},null,2));console.log('PASS native browser UI, original cache, geometric bodies, ownership refresh, action grid, mobile frame profile',timing);
  }finally{if(browser)await browser.close();server.kill()}})().catch(e=>{console.error(e);process.exitCode=1});

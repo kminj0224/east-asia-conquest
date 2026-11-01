@@ -1,3 +1,5 @@
+한국·일본 소총수/전차/정예전차 이미지 및 테르하 원본 전투 효과를 추가한 **v1.2.0**입니다. [APK 릴리스](https://github.com/kminj0224/east-asia-conquest/releases/tag/v1.2.0). 원본 PNG 8개는 `game/assets/eastasia-*.png`, 연결 지침은 `art/east-asia-units/README.md`에 있습니다. 나머지 병종과 도시는 기존 도형 외형을 유지합니다.
+
 # 동아시아 콘퀘스트
 
 [최신 APK 릴리스](../../releases/latest) · Android 8 이상 · 가로 화면 · 앱 ID `com.eastasia.conquest`
