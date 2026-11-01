@@ -25,7 +25,7 @@ def manifest_version(data):
    for j in range(count):
     p=off+start+struct.unpack_from('<I',b,off+head+4*j)[0];n=struct.unpack_from('<H',b,p)[0];assert n<0x8000
     value=b[p+2:p+2+2*n].decode('utf-16le')
-    value={'1.10.65':VERSION,'테르하: 전장의 국권':APP_NAME,'com.terha.conquest':'com.eastasia.conquest','.MainActivity':'com.terha.conquest.MainActivity'}.get(value,value)
+    value={'1.10.65':VERSION,'테르하: 전장의 국권':APP_NAME,'com.terha.conquest':'com.eastasia.conquest','.MainActivity':'com.terha.conquest.MainActivity','com.terha.conquest':'com.eastasia.conquest','.MainActivity':'com.terha.conquest.MainActivity'}.get(value,value)
     strings.append(value);offsets.append(len(pool));encoded=value.encode('utf-16le')
     pool+=struct.pack('<H',len(encoded)//2)+encoded+b'\0\0'
    pool+=bytes((-len(pool))%4)
