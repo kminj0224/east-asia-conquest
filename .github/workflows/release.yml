@@ -1,4 +1,4 @@
-name: Build and release East Asia Conquest
+name: Native terrain parity and APK v1.1.0
 on:
   push:
     branches: [main]
@@ -11,7 +11,7 @@ concurrency:
 jobs:
   release:
     runs-on: ubuntu-24.04
-    timeout-minutes: 35
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -24,62 +24,60 @@ jobs:
       - name: Install build dependencies
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y ffmpeg python3-shapely
-      - name: Materialize pinned original engine and terrain assets
-        if: ${{ hashFiles('game/assets/game.js') == '' }}
+          sudo apt-get install -y ffmpeg python3-shapely python3-numpy
+          npm ci --no-audit --no-fund
+          npm install --no-save --package-lock=false playwright@1.58.2
+          npx playwright install --with-deps chromium
+      - name: Restore the exact original terrain materials
+        if: ${{ hashFiles('art/terrain-materials/terrain-materials.png') == '' }}
         run: |
           git clone --no-checkout https://github.com/kminj0224/terha-conquest.git /tmp/terha-upstream
           git -C /tmp/terha-upstream checkout 4c968ba6d5d8a0397038de58612548341df48f8d
-          cp -a /tmp/terha-upstream/game /tmp/terha-upstream/android /tmp/terha-upstream/tools /tmp/terha-upstream/audio /tmp/terha-upstream/qa .
-          python3 tools/east-asia/patch_source.py
-          mkdir -p data/flags
-          curl -fL https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson -o data/countries.geojson
-          curl -fL https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_10m_rivers_lake_centerlines.geojson -o data/rivers.geojson
-          for code in kr cn jp kp tw ru mn vn; do
-            curl -fL "https://raw.githubusercontent.com/lipis/flag-icons/main/flags/4x3/$code.svg" -o "data/flags/$code.svg"
-          done
-          sha256sum -c data/source-checksums.txt
-      - name: Prepare original materials and East Asia geography
+          mkdir -p art
+          cp -a /tmp/terha-upstream/art/terrain-materials art/
+      - name: Bake the new geography through the original Terha pipeline
         run: |
-          npm ci --no-audit --no-fund
           python3 tools/east-asia/generate_map.py
+          node tools/east-asia/export_geography.cjs
+          node tools/bake-aligned-map.cjs
+          node tools/build-map-lods.cjs
           node tools/east-asia/render_assets.cjs
           python3 tools/prepare_operation_music.py
-      - name: Verify game, geography, saved operations and native shell
+      - name: Verify geography, original renderer and real browser behavior
         run: |
           npm test
+          node qa/east-asia-atlas.cjs
+          node qa/east-asia-browser.cjs
           python3 qa/verify-native.py
-      - name: Build and verify signed standalone APK
+      - name: Build and verify the signed update APK
         run: |
           python3 build.py
           python3 qa/east-asia-apk.py
-      - name: Save complete independent source
+      - name: Commit exact verified source and artwork
         id: source
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add game android tools audio qa data docs package.json package-lock.json build.py .gitignore AGENTS.md README.md
+          git add game art tools audio qa data docs package.json package-lock.json build.py .gitignore AGENTS.md README.md
           if ! git diff --cached --quiet; then
-            git commit -m 'Materialize verified East Asia Conquest engine, geography and assets'
+            git commit -m 'Bake and verify the native East Asia atlas and geometry'
             git push origin HEAD:main
           fi
           echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: East-Asia-Conquest-checks
+          name: East-Asia-Conquest-v110-checks
           path: |
-            qa/east-asia-previews/*.png
+            qa/east-asia-previews/*
             docs/map-report.json
             deliverables/*
           if-no-files-found: ignore
-      - name: Publish APK release
+      - name: Publish verified update
         env:
           GH_TOKEN: ${{ github.token }}
           SOURCE_SHA: ${{ steps.source.outputs.sha }}
         run: |
-          if gh release view v1.0.0 >/dev/null 2>&1; then
-            test "$(gh api repos/$GITHUB_REPOSITORY/git/ref/tags/v1.0.0 --jq .object.sha)" = "$SOURCE_SHA"
-          else
-            gh release create v1.0.0 deliverables/East-Asia-Conquest-v1.0.0.apk deliverables/SHA256SUMS.txt --target "$SOURCE_SHA" --title '동아시아 콘퀘스트 v1.0.0' --notes-file docs/releases/v1.0.0.md
+          if ! gh release view v1.1.0 >/dev/null 2>&1; then
+            gh release create v1.1.0 deliverables/East-Asia-Conquest-v1.1.0.apk deliverables/SHA256SUMS.txt qa/east-asia-previews/korea-game.png qa/east-asia-previews/east-asia-overview.png --target "$SOURCE_SHA" --title '동아시아 콘퀘스트 v1.1.0 — 테르하 원본 지도 방식 복원' --notes-file docs/releases/v1.1.0.md
           fi

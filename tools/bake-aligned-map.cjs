@@ -7,8 +7,8 @@ const LEFT=geo.left||0,TOP=geo.top||0,COLS=page?page.cols:8,ROWS=page?page.rows:
 const surface=(w,h)=>{const c=createCanvas(w,h);return[c,c.getContext('2d')]};
 const sha=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
 function hex(g,t){g.beginPath();[[42.6667,0],[21.3333,27.715],[-21.3333,27.715],[-42.6667,0],[-21.3333,-27.715],[21.3333,-27.715]].forEach(([x,y],i)=>i?g.lineTo(t.x+x,t.y+y):g.moveTo(t.x+x,t.y+y));g.closePath()}
-const northSnow=new Set();{const seen=new Set;for(const t of geo.tiles)if(t.owner===0&&!seen.has(t.id)){const a=[t.id];seen.add(t.id);for(let j=0;j<a.length;j++){const id=a[j],x=id%112,y=Math.floor(id/112),d=x&1;for(const[xx,yy]of [[x,y-1],[x,y+1],[x-1,y-1+d],[x-1,y+d],[x+1,y-1+d],[x+1,y+d]]){const n=yy*112+xx;if(xx>=0&&xx<112&&yy>=0&&yy<84&&geo.tiles[n].owner===0&&!seen.has(n)){seen.add(n);a.push(n)}}}if(Math.min(...a.map(i=>geo.tiles[i].y))<600&&Math.max(...a.map(i=>geo.tiles[i].y))<1200)for(const i of a)northSnow.add(i)}}
-function biome(t){return geo.biomes?.[t.owner]|| (t.owner===6||northSnow.has(t.id)?'snow':t.owner===1?'barren':t.owner===3?'desert':t.owner===4||t.owner===5?'tropical':'temperate')}
+const northSnow=new Set();
+function biome(t){return t.biome||geo.biomes?.[t.owner]|| (t.owner===6||northSnow.has(t.id)?'snow':t.owner===1?'barren':t.owner===3?'desert':t.owner===4||t.owner===5?'tropical':'temperate')}
 function intersectsCity(x,y,w,h){return cities.some(q=>{const xx=clamp(q.x,x-w/2,x+w/2),yy=clamp(q.cy,y-h,y);return((xx-q.x)/q.rx)**2+((yy-q.cy)/q.ry)**2<1})}
 function hash(x,y){let a=(Math.imul(x,374761393)+Math.imul(y,668265263))|0;a=Math.imul(a^(a>>>13),1274126177);return((a^(a>>>16))>>>0)/4294967295}
 const rBins=new Map;for(const r of geo.reaches)for(const p of r.samples){const k=Math.floor(p.x/64)+','+Math.floor(p.y/64);if(!rBins.has(k))rBins.set(k,[]);rBins.get(k).push(p)}

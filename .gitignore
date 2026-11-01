@@ -12,3 +12,4 @@ tools/dx.jar
 game/assets/operation-music-data.js
 .python-deps/
 qa/east-asia-previews/
+bake*.log
