@@ -1,0 +1,93 @@
+name: 전체 전차 크기 조정 v1.2.4 — 메인 반영 및 릴리스
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: east-asia-release
+  cancel-in-progress: false
+env:
+  REVIEWED_SOURCE_SHA: 353d8eb1f591141a9d66cafb2f80f46db4315fb2
+jobs:
+  apply-and-release:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Stage the prepared code and original PNGs without pushing main
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view v1.2.4 >/dev/null 2>&1; then
+            echo 'v1.2.4 already exists; refusing to overwrite the release.' >&2
+            exit 1
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if git ls-remote --exit-code --tags origin refs/tags/v1.2.4 >/dev/null 2>&1; then
+            echo 'v1.2.4 tag already exists; refusing to overwrite it.' >&2
+            exit 1
+          fi
+          git fetch origin "$REVIEWED_SOURCE_SHA"
+          git cat-file -e "$REVIEWED_SOURCE_SHA^{commit}"
+          git merge --no-ff --no-edit "$REVIEWED_SOURCE_SHA" -m 'Apply verified Korean tank scale and finite map source for v1.2.4'
+          git merge-base --is-ancestor "$REVIEWED_SOURCE_SHA" HEAD
+          echo "CANDIDATE_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+          python3 -c "import json; assert json.load(open('package.json'))['version'] == '1.2.4'"
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y ffmpeg python3-shapely python3-numpy python3-pil
+          npm ci --no-audit --no-fund
+          npm install --no-save --package-lock=false playwright@1.58.2
+          npx playwright install --with-deps chromium
+      - name: Verify original PNG bytes and offline bounds
+        run: |
+          python3 tools/east-asia/measure_unit_art.py
+          git diff --exit-code -- game/assets/east-asia-unit-bounds.js
+      - name: Verify game, real browser and native shell
+        run: |
+          python3 tools/prepare_operation_music.py
+          npm test
+          node qa/east-asia-atlas.cjs
+          node qa/east-asia-browser.cjs
+          python3 qa/verify-native.py
+      - name: Build and verify the signed v1.2.4 APK
+        run: |
+          python3 build.py
+          python3 qa/east-asia-apk.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: East-Asia-Conquest-v124-checks
+          path: |
+            qa/east-asia-previews/*
+            deliverables/*
+          if-no-files-found: ignore
+      - name: Apply the verified prepared source to main
+        id: source
+        run: |
+          git diff --exit-code HEAD --
+          test "$(git rev-parse HEAD)" = "$CANDIDATE_SHA"
+          (cd deliverables && sha256sum -c SHA256SUMS.txt)
+          git push origin HEAD:main
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - name: Publish v1.2.4 from the verified main commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ steps.source.outputs.sha }}
+        run: |
+          git tag v1.2.4 "$SOURCE_SHA"
+          git push origin refs/tags/v1.2.4
+          gh release create v1.2.4 --verify-tag deliverables/East-Asia-Conquest-v1.2.4.apk deliverables/SHA256SUMS.txt --target "$SOURCE_SHA" --title '동아시아 콘퀘스트 v1.2.4 — 전체 전차 확대·한국군 일반 전차 +6%' --notes-file docs/releases/v1.2.4.md
