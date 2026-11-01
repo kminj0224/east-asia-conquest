@@ -1,8 +1,5 @@
-name: Publish tank update to main and release v1.2.1
+name: Manual APK release
 on:
-  push:
-    branches: [main]
-    paths: [release-request.json]
   workflow_dispatch:
 permissions:
   contents: write
@@ -11,30 +8,11 @@ concurrency:
   cancel-in-progress: false
 jobs:
   release:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
-      - name: Materialize reviewed source and original user artwork
-        run: |
-          python3 - <<'PYCODE'
-          import pathlib,base64,tarfile,io,hashlib,json
-          parts=sorted(pathlib.Path('.release-staging').glob('*.b64'))
-          if parts:
-            raw=base64.b64decode(''.join(p.read_text() for p in parts))
-            expected=json.loads(pathlib.Path('release-request.json').read_text())['source_sha256']
-            assert hashlib.sha256(raw).hexdigest()==expected
-            with tarfile.open(fileobj=io.BytesIO(raw),mode='r:gz') as archive:
-              archive.extractall('.',filter='data')
-            for p in parts:p.unlink()
-          PYCODE
-      - name: Apply reviewed impact-check timing fix
-        run: |
-          python3 - <<'PYCODE'
-          from pathlib import Path
-          target=Path('qa/east-asia-unit-browser.cjs')
-          target.write_text("'use strict';\nconst path=require('path'),assert=require('assert/strict');\nmodule.exports=async(page,out)=>{\n await page.waitForFunction(()=>Object.values(eastAsiaRifleArt).every(a=>a.idleReady&&a.fireReady)&&Object.values(eastAsiaTankArt).every(a=>a.idleReady)&&combatProjectileArt.idleReady&&battlefieldEffects.idleReady);\n const report=await page.evaluate(()=>{\n  focusCapital();selected=null;panelOpen=false;refreshSelection();units=[];moving=[];fx=[];sound=true;\n  const p=pxy(cities.find(q=>q.f===0&&q.capital).tile),locations=[];\n  for(const [row,f]of [0,2].entries())for(const [col,type]of [0,1,14].entries()){\n   let tile=worldTileAt(p.x+(col-1)*125,p.y+(row?95:-70));\n   if(cityAt(tile)||tiles[tile].owner<0){\n    const desired={x:p.x+(col-1)*125,y:p.y+(row?95:-70)};\n    tile=tiles.reduce((best,t,i)=>t.owner<0||t.city>=0||units.some(u=>u.tile===i)?best:best<0||Math.hypot(pxy(i).x-desired.x,pxy(i).y-desired.y)<Math.hypot(pxy(best).x-desired.x,pxy(best).y-desired.y)?i:best,-1);\n   }\n   const u=makeUnit(f,type,tile,1);u.angle=row?Math.PI:0;u.rifleFacing=u.tankFacing=row?-1:1;locations.push(u.id);\n  }\n  cam.x=p.x;cam.y=p.y;cam.z=1.6;buildRegions();return locations;\n });\n assert.equal(report.length,6);await page.screenshot({path:path.join(out,'unit-art-game.png')});\n const sounds=await page.evaluate(()=>{\n  const at=performance.now()+100;combatAudio.queue=[];\n  for(const u of units){const p=pxy(u.tile);launchShot(u,{x:p.x+(u.f===0?220:-220),y:p.y},at,520)}\n  return combatAudio.queue.map(v=>v.name);\n });\n for(const name of ['rifle','tank','heavy_tank'])assert(sounds.includes(name));assert(!sounds.includes('laser'));\n await page.waitForTimeout(135);await page.screenshot({path:path.join(out,'unit-art-attack.png')});\n // Capture short-lived impact layers in the same browser task that creates them.\n // Screenshot encoding can outlast blood/sparks and must not govern assertions.\n const effects=await page.evaluate(()=>{const now=performance.now();for(const u of units){const target=units.find(v=>v.f!==u.f&&v.type===u.type);targetExplosions(u,pxy(target.tile),25,now,false,target)}for(const e of fx)if(ILLUSTRATED_HITS.has(e.kind)){e.start=now-80}return fx.filter(e=>ILLUSTRATED_HITS.has(e.kind)).map(e=>({layers:e.layers,sound:e.combatImpact,ground:e.explosionGroundY,hitX:e.hitX,hitY:e.hitY}))});\n await page.screenshot({path:path.join(out,'unit-art-impact.png')});\n assert(effects.some(e=>e.layers?.includes('armorSmoke')));assert(effects.some(e=>e.layers?.includes('blood')));assert(!effects.some(e=>e.sound==='energy_hit'));\n assert(effects.every(e=>Number.isFinite(e.ground)&&Number.isFinite(e.hitX)&&Number.isFinite(e.hitY)));\n await page.evaluate(()=>{sound=false;setup();focusCapital();selected=null;panelOpen=false;refreshSelection()});\n console.log('PASS real browser: six national bodies, attack/impact screenshots, PCM weapon queue, directional hit centers, spark/smoke/blood layers, zero energy-tank routing');\n};\n", encoding='utf-8')
-          PYCODE
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -49,60 +27,32 @@ jobs:
           npm ci --no-audit --no-fund
           npm install --no-save --package-lock=false playwright@1.58.2
           npx playwright install --with-deps chromium
-      - name: Restore the exact original terrain materials
-        if: ${{ hashFiles('art/terrain-materials/terrain-materials.png') == '' }}
-        run: |
-          git clone --no-checkout https://github.com/kminj0224/terha-conquest.git /tmp/terha-upstream
-          git -C /tmp/terha-upstream checkout 4c968ba6d5d8a0397038de58612548341df48f8d
-          mkdir -p art
-          cp -a /tmp/terha-upstream/art/terrain-materials art/
-      - name: Bake the new geography through the original Terha pipeline
-        run: |
-          if ! node qa/east-asia-atlas.cjs; then
-            python3 tools/east-asia/generate_map.py
-            node tools/east-asia/export_geography.cjs
-            node tools/bake-aligned-map.cjs
-            node tools/build-map-lods.cjs
-            node tools/east-asia/render_assets.cjs
-          fi
-          python3 tools/prepare_operation_music.py
-      - name: Verify geography, original renderer and real browser behavior
+      - name: Verify exact uploaded PNGs
         run: |
           python3 tools/east-asia/measure_unit_art.py
+          git diff --exit-code -- game/assets/east-asia-unit-bounds.js
+      - name: Verify game and native shell
+        run: |
+          python3 tools/prepare_operation_music.py
           npm test
           node qa/east-asia-atlas.cjs
           node qa/east-asia-browser.cjs
           python3 qa/verify-native.py
-      - name: Build and verify the signed update APK
+      - name: Build and verify signed update APK
         run: |
           python3 build.py
           python3 qa/east-asia-apk.py
-      - name: Commit exact verified source and artwork
-        id: source
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add game art tools audio qa data docs package.json package-lock.json build.py .gitignore AGENTS.md README.md
-          git add -u .release-staging || true
-          if ! git diff --cached --quiet; then
-            git commit -m 'Replace tank artwork and calibrate actual hull size to native hex geometry'
-            git push origin HEAD:main
-          fi
-          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: East-Asia-Conquest-v121-checks
+          name: East-Asia-Conquest-v122-checks
           path: |
             qa/east-asia-previews/*
-            docs/map-report.json
             deliverables/*
           if-no-files-found: ignore
       - name: Publish verified update
         env:
           GH_TOKEN: ${{ github.token }}
-          SOURCE_SHA: ${{ steps.source.outputs.sha }}
+          SOURCE_SHA: ${{ github.sha }}
         run: |
-          if ! gh release view v1.2.1 >/dev/null 2>&1; then
-            gh release create v1.2.1 deliverables/East-Asia-Conquest-v1.2.1.apk deliverables/SHA256SUMS.txt qa/east-asia-previews/korea-game.png qa/east-asia-previews/east-asia-overview.png qa/east-asia-previews/unit-art.png qa/east-asia-previews/tank-fit.png qa/east-asia-previews/unit-art-game.png qa/east-asia-previews/unit-art-attack.png qa/east-asia-previews/unit-art-impact.png --target "$SOURCE_SHA" --title '동아시아 콘퀘스트 v1.2.1 — 새 전차 이미지와 차체 기준 크기 보정' --notes-file docs/releases/v1.2.1.md
-          fi
+          gh release create v1.2.2 deliverables/East-Asia-Conquest-v1.2.2.apk deliverables/SHA256SUMS.txt --target "$SOURCE_SHA" --title '동아시아 콘퀘스트 v1.2.2 — 한국군 지원보병 이미지' --notes-file docs/releases/v1.2.2.md
