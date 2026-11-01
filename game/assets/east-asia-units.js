@@ -30,18 +30,19 @@ const eastAsiaTankArt={
 // Divide out the native 1.4 armor scale, so it is applied exactly once.
 const EAST_ASIA_HULL_WIDTH=S*4/3+8;
 const EAST_ASIA_TANKS={
- '0:1':{source:'kr-tank',sizeScale:.9,mx:2151,my:224,baseFacing:1},
+ '0:1':{source:'kr-tank',mx:2151,my:224,baseFacing:1},
  '0:14':{source:'kr-elite',mx:8,my:282,baseFacing:-1},
  '2:1':{source:'jp-tank',mx:17,my:128,baseFacing:-1},
  '2:14':{source:'jp-elite',mx:14,my:326,baseFacing:-1}
 };
-for(const a of Object.values(EAST_ASIA_TANKS)){
+for(const [key,a] of Object.entries(EAST_ASIA_TANKS)){
+ const [f,type]=key.split(':').map(Number);
  const source=EAST_ASIA_UNIT_BOUNDS[a.source],hull=source.hullBounds;
  a.w=source.width;a.h=source.height;
- a.drawWidth=EAST_ASIA_HULL_WIDTH*(a.sizeScale??1)/HEAVY_UNIT_VISUAL_SCALE*a.w/(hull[2]-hull[0]);
+ a.drawWidth=EAST_ASIA_HULL_WIDTH/HEAVY_UNIT_VISUAL_SCALE*a.w/(hull[2]-hull[0]);
  a.drawX=-(hull[0]+hull[2])/2/a.w*a.drawWidth;
  a.yOffset=(a.h-source.opaqueBounds[3])/a.w*a.drawWidth;
- a.shadowWidth=EAST_ASIA_HULL_WIDTH*(a.sizeScale??1)*.45;
+ a.shadowWidth=EAST_ASIA_HULL_WIDTH*tankVisualMultiplier({f,type})*.45;
 }
 function eastAsiaUnitHasArt(u){return !!(infantryArtProfile(u)||EAST_ASIA_TANKS[u.f+':'+u.type])}
 isBaekTank=function(u){return !!EAST_ASIA_TANKS[u.f+':'+u.type]};
@@ -65,7 +66,7 @@ for(const f of [0,2])for(const type of (f===0?[0,1,8,9,10,14]:[0,1,14])){
   if(profile){const p=profile;w=!firing&&p.idleWidth||p.width;h=p.height;scale=1;flip=facing!==(p.baseFacing??-1);box={x:-w/2,y:infantryArtBottom(p,firing)-h}}
   else{
    const a=EAST_ASIA_TANKS[key];box=baekTankDrawBox(a);w=box.w;h=box.h;
-   scale=HEAVY_UNIT_VISUAL_SCALE;flip=facing!==a.baseFacing;
+   scale=unitBodyVisualScale({f,type});flip=facing!==a.baseFacing;
    // Center impacts over the hull rather than the protruding barrel.
    b=[source.hullBounds[0],opaque[1],source.hullBounds[2],opaque[3]];
   }
@@ -75,4 +76,12 @@ for(const f of [0,2])for(const type of (f===0?[0,1,8,9,10,14]:[0,1,14])){
  }
  HIT_CENTER_DATA[key]=Array.from({length:4},()=>hits);
  IMPACT_GROUND_DATA[key]=Array.from({length:4},()=>feet);
+}
+// The classic (non-PNG) tank bodies use the same fixed ground pivot at y=11.
+// Bring their premeasured impact-ground tables along with the enlarged bodies.
+for(let f=0;f<factions.length;f++)for(const type of [1,13,14]){
+ if(EAST_ASIA_TANKS[f+':'+type])continue;
+ const key=f+':'+type,m=tankVisualMultiplier({f,type});
+ if(IMPACT_GROUND_DATA[key])IMPACT_GROUND_DATA[key]=IMPACT_GROUND_DATA[key].map(tier=>tier.map(y=>11+(y-11)*m));
+ if(HIT_CENTER_DATA[key])HIT_CENTER_DATA[key]=HIT_CENTER_DATA[key].map(tier=>tier.map(([x,y])=>[x*m,11+(y-11)*m]));
 }
