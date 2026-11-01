@@ -1,6 +1,5 @@
 {
-  "version": "1.2.0",
-  "source_sha256": "a7215a288e7019f8fc471b438b2c909a2b0843df889475d978887d303387818a",
-  "parts": 24,
-  "revision": 2
+  "version": "1.2.1",
+  "source_sha256": "17a772dbcb4af623fa3257ae3f5858672e0e8967e79254455414bb7f1e075d01",
+  "parts": 11
 }
