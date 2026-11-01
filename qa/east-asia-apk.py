@@ -1,6 +1,6 @@
 import pathlib,zipfile,struct,hashlib
 root=pathlib.Path(__file__).resolve().parents[1]
-p=root/'deliverables/East-Asia-Conquest-v1.2.2.apk'
+p=root/'deliverables/East-Asia-Conquest-v1.2.3.apk'
 with zipfile.ZipFile(p) as z:
  assert z.testzip() is None
  b=z.read('AndroidManifest.xml');strings=[];off=8
@@ -10,8 +10,14 @@ with zipfile.ZipFile(p) as z:
    count,styles,flags,start,style_start=struct.unpack_from('<IIIII',b,off+8)
    for i in range(count):
     p0=off+start+struct.unpack_from('<I',b,off+h+4*i)[0];n=struct.unpack_from('<H',b,p0)[0];strings.append(b[p0+2:p0+2+2*n].decode('utf-16le'))
+  elif k==0x102:
+   start,asize,count=struct.unpack_from('<HHH',b,off+24)
+   for j in range(count):
+    pos=off+16+start+j*asize;name=struct.unpack_from('<I',b,pos+4)[0]
+    if strings[name]=='versionCode':assert struct.unpack_from('<I',b,pos+16)[0]==8
   off+=s
- for s in ['com.eastasia.conquest','com.terha.conquest.MainActivity','동아시아 콘퀘스트','1.2.2']:assert s in strings,s
+ assert __import__('json').loads((root/'package.json').read_text())['version']=='1.2.3'
+ for s in ['com.eastasia.conquest','com.terha.conquest.MainActivity','동아시아 콘퀘스트','1.2.3']:assert s in strings,s
  assert 'com.terha.conquest' not in strings
  for name in ['index.html','east-asia.js','east-asia-units.js','east-asia-unit-bounds.js','tank-art.js','mapdata.js','world-natural.png','natural-detail-5-3.jpg','natural-ownership-data.js','world-clean.png','flag-0.png','flag-4.png']:
   assert z.read('assets/'+name)==(root/'game/assets'/name).read_bytes(),name

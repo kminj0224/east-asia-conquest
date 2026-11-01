@@ -2,7 +2,7 @@ const fs=require('fs'),path=require('path'),assert=require('assert/strict'),{spa
 const out=path.resolve(__dirname,'east-asia-previews');fs.mkdirSync(out,{recursive:true});const server=spawn('python3',['-m','http.server','8874','--bind','127.0.0.1'],{cwd:path.resolve(__dirname,'..'),stdio:'ignore'});
 const delay=ms=>new Promise(r=>setTimeout(r,ms));
 (async()=>{let browser;try{
- await delay(500);browser=await chromium.launch({headless:true});const page=await browser.newPage({viewport:{width:1536,height:672},deviceScaleFactor:1.5,hasTouch:true,isMobile:true,userAgent:'Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36 Chrome/145.0.0.0 Mobile Safari/537.36'});const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await delay(500);browser=await chromium.launch({headless:true,...(process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE?{executablePath:process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE,args:['--no-sandbox','--disable-dev-shm-usage','--no-zygote','--single-process','--use-gl=angle','--use-angle=swiftshader','--disable-setuid-sandbox']}: {})});const page=await browser.newPage({viewport:{width:1536,height:672},deviceScaleFactor:1.5,hasTouch:true,isMobile:true,userAgent:'Mozilla/5.0 (Linux; Android 13) AppleWebKit/537.36 Chrome/145.0.0.0 Mobile Safari/537.36'});const errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto('http://127.0.0.1:8874/game/assets/index.html',{waitUntil:'load',timeout:90000});await page.locator('#appStart:not([disabled])').waitFor();await page.locator('#appStart').click();await page.locator('#battle').click();await page.locator('#conquestMode').click();assert.equal(await page.locator('#factions button').count(),6);await page.locator('#start').click();await page.waitForFunction(()=>started&&!campaignLoading&&!menuMode,{timeout:180000});
  await page.evaluate(()=>{selected=null;panelOpen=false;focusCapital()});await page.waitForFunction(()=>naturalDetailsReady()&&!!groundView,{timeout:90000});await page.screenshot({path:path.join(out,'korea-game.png')});
  const cache=await page.evaluate(async()=>{const before=groundViewBuilds;for(let n=0;n<45;n++)await new Promise(requestAnimationFrame);return{before,after:groundViewBuilds,bytes:naturalDetailBytes,classic:eastAsiaClassicBody===rifleSprite,cities:citySprite===cityArtSprite}});assert.equal(cache.before,cache.after,'stationary native screen cache');assert(cache.classic&&cache.cities);assert(cache.bytes<=90*1024*1024);
@@ -12,6 +12,20 @@ const delay=ms=>new Promise(r=>setTimeout(r,ms));
  await page.evaluate(()=>{selected=null;panelOpen=false;refreshSelection();cam.x=WW/2;cam.y=HH/2;cam.z=Math.min(innerWidth/WW,innerHeight/HH)*.94});await delay(250);await page.screenshot({path:path.join(out,'east-asia-overview.png')});
  await page.evaluate(()=>{focusCapital();selected=null;panelOpen=false;refreshSelection()});await page.waitForFunction(()=>naturalDetailsReady());
  const pan=await page.evaluate(async()=>{for(let n=0;n<24;n++){cam.y+=12;await new Promise(requestAnimationFrame)}for(let n=0;n<24;n++){cam.y-=12;await new Promise(requestAnimationFrame)}return{bytes:naturalDetailBytes,chunks:naturalDetailCache.size}});assert(pan.bytes<=100*1024*1024,'bounded visible-region cache after panning');
+ // Real Chromium: controls, extreme drag/pinch, orientation resize and edge clicks.
+ const assertInside=async()=>{await page.evaluate(()=>new Promise(requestAnimationFrame));assert(await page.evaluate(()=>cam.x-screenW/(2*cam.z)>=-1e-7&&cam.x+screenW/(2*cam.z)<=WW+1e-7&&cam.y-screenH/(2*cam.z)>=-1e-7&&cam.y+screenH/(2*cam.z)<=HH+1e-7),'browser viewport remains inside rectangle')};
+ for(const viewport of [{width:1536,height:672},{width:390,height:844}]){
+  await page.setViewportSize(viewport);await assertInside();
+  await page.evaluate(()=>{for(let n=0;n<40;n++)$('minus').onclick();$('mapbtn').onclick()});await assertInside();
+  await page.locator('#c').dispatchEvent('wheel',{deltaY:99999});await assertInside();
+  for(const sign of [-1,1]){
+   await page.evaluate(sign=>{const canvas=$('c');canvas.setPointerCapture=()=>{};for(const event of [new PointerEvent('pointerdown',{pointerId:91,clientX:100,clientY:100}),new PointerEvent('pointermove',{pointerId:91,clientX:sign*100000,clientY:sign*100000}),new PointerEvent('pointerup',{pointerId:91,clientX:sign*100000,clientY:sign*100000})])canvas.dispatchEvent(event)},sign);await assertInside();
+   await page.evaluate(sign=>{const b=$('mini').getBoundingClientRect();$('mini').onclick({clientX:b.left+(sign<0?0:b.width),clientY:b.top+(sign<0?0:b.height)})},sign);await assertInside();
+  }
+  await page.evaluate(()=>{const canvas=$('c');for(const [type,id,x] of [['pointerdown',91,100],['pointerdown',92,300],['pointermove',92,101],['pointerup',92,101],['pointerup',91,100]])canvas.dispatchEvent(new PointerEvent(type,{pointerId:id,clientX:x,clientY:100}))});await assertInside();
+ }
+ await page.setViewportSize({width:1536,height:672});await page.evaluate(()=>{focusCapital();selected=null;panelOpen=false;refreshSelection()});await assertInside();
+ await page.screenshot({path:path.join(out,'bounded-map.png')});
  await require('./east-asia-unit-browser.cjs')(page,out);
  assert.equal(errors.length,0,errors.join('\n'));fs.writeFileSync(path.join(out,'browser-report.json'),JSON.stringify({cache,timing,pan,errors},null,2));console.log('PASS native browser UI, original cache, geometric bodies, ownership refresh, action grid, mobile frame profile',timing);
  }finally{if(browser)await browser.close();server.kill()}})().catch(e=>{console.error(e);process.exitCode=1});
