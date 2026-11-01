@@ -1,0 +1,210 @@
+{
+  "levels": [
+    [
+      8688,
+      6516
+    ],
+    [
+      4344,
+      3258
+    ],
+    [
+      2172,
+      1629
+    ]
+  ],
+  "inputs": [
+    {
+      "name": "natural-detail-0-0",
+      "sha256": "5c8e9ca11567507d21fd336aa34e7e84651c1ab58f239c01ae05184dc027c39f"
+    },
+    {
+      "name": "natural-detail-1-0",
+      "sha256": "faf6e588c8825b4d76f4a9172d58130e656ca7083aa6eb13405d7eb21c1eaa02"
+    },
+    {
+      "name": "natural-detail-2-0",
+      "sha256": "ec9ffec40700f614b9f6a1ed63f0a9b5ed121715027f6b7c47765415ba58c9c0"
+    },
+    {
+      "name": "natural-detail-3-0",
+      "sha256": "ddd8957ae497134350e9456cbd3fe22506254ab9e9cfc95199e3351afa2b88ec"
+    },
+    {
+      "name": "natural-detail-4-0",
+      "sha256": "018cb93762827b994e4953ff5b7fc5cd56ad66ac84f7fc11810a1b01a088d85b"
+    },
+    {
+      "name": "natural-detail-5-0",
+      "sha256": "2835cc76c3afe7807f2883153415d7d332061eb95c7301848a0430a4b8ff0f51"
+    },
+    {
+      "name": "natural-detail-6-0",
+      "sha256": "18ddfbe8bbb7764db0190fef37139c70ac30c50be1c718366f2859d2a455177b"
+    },
+    {
+      "name": "natural-detail-7-0",
+      "sha256": "480505ee39ce06a508a538a4bb5f419f7cc11e1d31a13e66b77e34277dd256ba"
+    },
+    {
+      "name": "natural-detail-0-1",
+      "sha256": "5bb4aa41a4a6b10322a3cac7508a14abafdaa9cd83a9583cf0d8d53fabb08d33"
+    },
+    {
+      "name": "natural-detail-1-1",
+      "sha256": "7ae50ef44cf92879752434f66cc217ddd3d4dfcca1982413abc1299adfc6e02d"
+    },
+    {
+      "name": "natural-detail-2-1",
+      "sha256": "7e982657c267e47ba23c63816e15eda9a3a04bf2a1c953b78551bbc2182f65c9"
+    },
+    {
+      "name": "natural-detail-3-1",
+      "sha256": "b61e70516b1e26055fe31e1a3e03c098350e4cca3a74673e08a08d4868b3689d"
+    },
+    {
+      "name": "natural-detail-4-1",
+      "sha256": "66f18c7ae0dcd49a6fc111efa686b6affa1d5564cdabecbeb2e97e5e33199865"
+    },
+    {
+      "name": "natural-detail-5-1",
+      "sha256": "9bdf077b0127b2d74d287b04092f990185c7296dadf0bb01d0c48476318ceeab"
+    },
+    {
+      "name": "natural-detail-6-1",
+      "sha256": "519c300c945f8851b042ff413c9c2987a4f833b84541a17f1de1b9f1109ceb64"
+    },
+    {
+      "name": "natural-detail-7-1",
+      "sha256": "adc24d7fc08423f99d8c57349750a4f2f03459ffeea5bfe577524b647552d5cb"
+    },
+    {
+      "name": "natural-detail-0-2",
+      "sha256": "02997b055cc6feabe075c3cdc0c3b02ddd30b2686be47f75fa0e5bfeb0360945"
+    },
+    {
+      "name": "natural-detail-1-2",
+      "sha256": "27e036648c8ce78b4574a7c565ebbf96d67ed9dc640ec2a39d793cbb051d859f"
+    },
+    {
+      "name": "natural-detail-2-2",
+      "sha256": "d19e33781c2b56313c956ba9f80e5ef5ef7b9231a82ae174846b0c1a3b719770"
+    },
+    {
+      "name": "natural-detail-3-2",
+      "sha256": "2ff29efb51fabcc22319ab4ce130a6df577997f2cf08897c4b84963cf22f7ca3"
+    },
+    {
+      "name": "natural-detail-4-2",
+      "sha256": "e3215068e1f13b4b23bceb65c90ec1689bccca84ca2bbd9d1d9e86c5863c1f20"
+    },
+    {
+      "name": "natural-detail-5-2",
+      "sha256": "c818866c0a8868fc276ccaf2dbe3d97ccfa5d06931d62ed0be090a7bce6e252d"
+    },
+    {
+      "name": "natural-detail-6-2",
+      "sha256": "c262a9d7dc8a523ad3b62f3f5c0d05e95074ef80f1257a43e81583e776c320bc"
+    },
+    {
+      "name": "natural-detail-7-2",
+      "sha256": "a64eb01d8d667e4d7673a7fcfd27710f559b0acd673ff58b25c5dd305e96076b"
+    },
+    {
+      "name": "natural-detail-0-3",
+      "sha256": "1349e8221afddb701bd886907f834e06534d84fb138632a8283cb806a0e51fa4"
+    },
+    {
+      "name": "natural-detail-1-3",
+      "sha256": "95bd612d50f00583b433d7db82a3300944ddfc413a99bc0eb9f5053bdc2ab9ad"
+    },
+    {
+      "name": "natural-detail-2-3",
+      "sha256": "5f1a68f0248d3d92dfc51b50cfd06c257b47431d8fa1e2d80b1a960717f6c6d4"
+    },
+    {
+      "name": "natural-detail-3-3",
+      "sha256": "4889e0843125c0527e82f7b94e811a6e492b2efd34d52409fcc35b2601ffbb93"
+    },
+    {
+      "name": "natural-detail-4-3",
+      "sha256": "2b3059c1884329285cc5ee632a4514dc728a0ac264913e7dc88619e744432718"
+    },
+    {
+      "name": "natural-detail-5-3",
+      "sha256": "4507a4a6af57dd90df925ff5f5d354acdbab18464bd8a990e2c93eeedf3035b5"
+    },
+    {
+      "name": "natural-detail-6-3",
+      "sha256": "e8f572a8e291f089e0269161e920b0260b1707aa385bf8221c58b44503bef008"
+    },
+    {
+      "name": "natural-detail-7-3",
+      "sha256": "7416f4167cc382d2684ca618bef6e29e1599aa9489924793d189dfaceaf19249"
+    },
+    {
+      "name": "natural-detail-0-4",
+      "sha256": "5682307dcb3e246719deb9f5fad564d11759990b66c40ebcfb9a3abff681f53d"
+    },
+    {
+      "name": "natural-detail-1-4",
+      "sha256": "21d6e6f7e058987ffb3bd3100ee9e7ece5dd48757c4213ffdcf5b4d9d6ace2bf"
+    },
+    {
+      "name": "natural-detail-2-4",
+      "sha256": "2243e6fa50b882b5c1204029fed023940d93ed43a3b46c9b3a6901f78ac52f9f"
+    },
+    {
+      "name": "natural-detail-3-4",
+      "sha256": "83f9f0493657b1fb7114a174c25dea2dd84a2720c451837f312f4b44a00b1491"
+    },
+    {
+      "name": "natural-detail-4-4",
+      "sha256": "fee654587e504a9108bfa5dbe35cb878d1f43e426a0025c836cc3dcbde075dbb"
+    },
+    {
+      "name": "natural-detail-5-4",
+      "sha256": "360302b4a2d298436d869459dc27b4063f85514a487f4f9992f4f7784799fcae"
+    },
+    {
+      "name": "natural-detail-6-4",
+      "sha256": "2a0efb02a119d04a162c0a55de11e79406ffbe31572446e2f3b938b729610143"
+    },
+    {
+      "name": "natural-detail-7-4",
+      "sha256": "5f18d7693df92e8307969850ed1788e8ff418d9e915810db5119b59185a3e206"
+    },
+    {
+      "name": "natural-detail-0-5",
+      "sha256": "6a64375206e978b687eedc623a34b4e6dfcd44bcbc5bf5653bf3f745b5633ae6"
+    },
+    {
+      "name": "natural-detail-1-5",
+      "sha256": "7b93d526b0ba0a171985c73315c13e557492fd1b681d37d0557a33c9133ef4a9"
+    },
+    {
+      "name": "natural-detail-2-5",
+      "sha256": "cea2b1ac6e8c1238054292041de28221cada0fd28a269186cf59c4e91cbc6aad"
+    },
+    {
+      "name": "natural-detail-3-5",
+      "sha256": "d5a1b63eaeed9c40ed319ea8a6b50152dc848813390aae804fb0fde9cf79159f"
+    },
+    {
+      "name": "natural-detail-4-5",
+      "sha256": "6c282016b0998f5c77e3b85b53efe26b3957adce61e0a614b334e37fd50c27e5"
+    },
+    {
+      "name": "natural-detail-5-5",
+      "sha256": "9e5943778d56d5d2ff817d66d04b81e94300db25031ada7a27fe83fe184e44ee"
+    },
+    {
+      "name": "natural-detail-6-5",
+      "sha256": "bdaece4ec60eacfc3ff7b32dcfb6e8487039763de47b5f69be77d3e728dd201d"
+    },
+    {
+      "name": "natural-detail-7-5",
+      "sha256": "731cf1dc8939975443a07b510c668456ecd6ebbb9dd02bee6bef414b71ab704e"
+    }
+  ]
+}

@@ -1,66 +1,46 @@
 {
-  "width": 86,
-  "height": 80,
+  "width": 99,
+  "height": 122,
   "landTiles": 3672,
   "sourceLandTiles": 3672,
+  "cities": 148,
+  "bounds": [
+    116.0,
+    21.0,
+    146.0,
+    46.0
+  ],
   "countries": {
     "South Korea": {
-      "land": 50,
+      "land": 151,
       "cities": 23
     },
     "China": {
-      "land": 2173,
-      "cities": 66
+      "land": 2438,
+      "cities": 34
     },
     "Japan": {
-      "land": 171,
+      "land": 588,
       "cities": 52
     },
     "North Korea": {
-      "land": 57,
+      "land": 197,
       "cities": 14
     },
     "Taiwan": {
-      "land": 26,
+      "land": 87,
       "cities": 22
     },
     "Russia": {
-      "land": 823,
-      "cities": 12
-    },
-    "Mongolia": {
-      "land": 343,
-      "cities": 11
-    },
-    "Vietnam": {
-      "land": 29,
-      "cities": 13
+      "land": 211,
+      "cities": 3
     }
   },
-  "cities": 213,
-  "bounds": [
-    105.0,
-    20.0,
-    147.0,
-    54.0
-  ],
-  "coastline": "Natural Earth / datasets geo-countries",
-  "islands": [
-    "제주",
-    "울릉도",
-    "독도",
-    "쓰시마",
-    "사도",
-    "펑후·마궁",
-    "진먼",
-    "마쭈·난간"
-  ],
-  "namedMountains": 31,
-  "namedRivers": 24,
+  "cityMinimumDistance": 2,
   "terrainTiles": {
-    "2": 1159,
-    "1": 1827,
-    "3": 352,
-    "4": 334
+    "1": 2656,
+    "2": 336,
+    "3": 463,
+    "4": 217
   }
 }
