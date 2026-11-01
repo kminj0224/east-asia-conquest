@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Offline opaque bounds for the eight original user PNGs; no runtime readback."""
+"""Offline opaque bounds for the original user PNGs; no runtime readback."""
 import json,pathlib,hashlib
 from PIL import Image
 root=pathlib.Path(__file__).resolve().parents[2]
