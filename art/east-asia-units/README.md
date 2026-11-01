@@ -14,4 +14,4 @@ The four tank PNGs are replaced with the revised user attachments. `hullScanTop`
 
 ## v1.2.2 Korean support infantry
 
-See [PNG upload and manual release instructions](../../docs/releases/v1.2.2.md). Grenadiers and antitank squads have separate idle/fire PNGs. The machinegun crew shares one left-facing image for both states. Native infantry hooks own facing, bursts, grenade trajectories, antitank muzzle smoke and audio. Hit/ground lookups use the same offline alpha bounds and mirrored draw boxes as the bodies. No PNG is embedded or re-encoded.
+See [One-click main update and release instructions](../../docs/releases/v1.2.2.md). Grenadiers and antitank squads have separate idle/fire PNGs. The machinegun crew shares one left-facing image for both states. Native infantry hooks own facing, bursts, grenade trajectories, antitank muzzle smoke and audio. Hit/ground lookups use the same offline alpha bounds and mirrored draw boxes as the bodies. No PNG is embedded or re-encoded.
