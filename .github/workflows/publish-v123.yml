@@ -7,7 +7,7 @@ concurrency:
   group: east-asia-release
   cancel-in-progress: false
 env:
-  REVIEWED_SOURCE_SHA: e9d0999b92bc26b9671b6acc3696a3b7d3d56107
+  REVIEWED_SOURCE_SHA: 78030cb5c0d32743ac560eb34ea563ad54f4a067
 jobs:
   apply-and-release:
     if: github.ref == 'refs/heads/main'
