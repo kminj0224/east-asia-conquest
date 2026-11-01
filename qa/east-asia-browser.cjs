@@ -13,9 +13,9 @@ const delay=ms=>new Promise(r=>setTimeout(r,ms));
  await page.evaluate(()=>{focusCapital();selected=null;panelOpen=false;refreshSelection()});await page.waitForFunction(()=>naturalDetailsReady());
  const pan=await page.evaluate(async()=>{for(let n=0;n<24;n++){cam.y+=12;await new Promise(requestAnimationFrame)}for(let n=0;n<24;n++){cam.y-=12;await new Promise(requestAnimationFrame)}return{bytes:naturalDetailBytes,chunks:naturalDetailCache.size}});assert(pan.bytes<=100*1024*1024,'bounded visible-region cache after panning');
  // Real Chromium: controls, extreme drag/pinch, orientation resize and edge clicks.
- const assertInside=async()=>{await page.evaluate(()=>new Promise(requestAnimationFrame));assert(await page.evaluate(()=>cam.x-screenW/(2*cam.z)>=-1e-7&&cam.x+screenW/(2*cam.z)<=WW+1e-7&&cam.y-screenH/(2*cam.z)>=-1e-7&&cam.y+screenH/(2*cam.z)<=HH+1e-7),'browser viewport remains inside rectangle')};
+ const assertInside=async()=>{const state=await page.evaluate(()=>({x:cam.x,y:cam.y,z:cam.z,screenW,screenH,WW,HH,inside:cam.x-screenW/(2*cam.z)>=-1e-7&&cam.x+screenW/(2*cam.z)<=WW+1e-7&&cam.y-screenH/(2*cam.z)>=-1e-7&&cam.y+screenH/(2*cam.z)<=HH+1e-7}));assert(state.inside,'browser viewport remains inside rectangle: '+JSON.stringify(state))};
  for(const viewport of [{width:1536,height:672},{width:390,height:844}]){
-  await page.setViewportSize(viewport);await assertInside();
+  await page.setViewportSize(viewport);await page.waitForFunction(v=>screenW===v.width&&screenH===v.height,viewport);await assertInside();
   await page.evaluate(()=>{for(let n=0;n<40;n++)$('minus').onclick();$('mapbtn').onclick()});await assertInside();
   await page.locator('#c').dispatchEvent('wheel',{deltaY:99999});await assertInside();
   for(const sign of [-1,1]){
@@ -24,7 +24,7 @@ const delay=ms=>new Promise(r=>setTimeout(r,ms));
   }
   await page.evaluate(()=>{const canvas=$('c');for(const [type,id,x] of [['pointerdown',91,100],['pointerdown',92,300],['pointermove',92,101],['pointerup',92,101],['pointerup',91,100]])canvas.dispatchEvent(new PointerEvent(type,{pointerId:id,clientX:x,clientY:100}))});await assertInside();
  }
- await page.setViewportSize({width:1536,height:672});await page.evaluate(()=>{focusCapital();selected=null;panelOpen=false;refreshSelection()});await assertInside();
+ await page.setViewportSize({width:1536,height:672});await page.waitForFunction(()=>screenW===1536&&screenH===672);await page.evaluate(()=>{focusCapital();selected=null;panelOpen=false;refreshSelection()});await assertInside();
  await page.screenshot({path:path.join(out,'bounded-map.png')});
  await require('./east-asia-unit-browser.cjs')(page,out);
  assert.equal(errors.length,0,errors.join('\n'));fs.writeFileSync(path.join(out,'browser-report.json'),JSON.stringify({cache,timing,pan,errors},null,2));console.log('PASS native browser UI, original cache, geometric bodies, ownership refresh, action grid, mobile frame profile',timing);
