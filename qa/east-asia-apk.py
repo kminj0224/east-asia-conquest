@@ -1,0 +1,21 @@
+import pathlib,zipfile,struct,hashlib
+root=pathlib.Path(__file__).resolve().parents[1]
+p=root/'deliverables/East-Asia-Conquest-v1.0.0.apk'
+with zipfile.ZipFile(p) as z:
+ assert z.testzip() is None
+ b=z.read('AndroidManifest.xml');strings=[];off=8
+ while off<len(b):
+  k,h,s=struct.unpack_from('<HHI',b,off)
+  if k==1:
+   count,styles,flags,start,style_start=struct.unpack_from('<IIIII',b,off+8)
+   for i in range(count):
+    p0=off+start+struct.unpack_from('<I',b,off+h+4*i)[0];n=struct.unpack_from('<H',b,p0)[0];strings.append(b[p0+2:p0+2+2*n].decode('utf-16le'))
+  off+=s
+ for s in ['com.eastasia.conquest','com.terha.conquest.MainActivity','동아시아 콘퀘스트','1.0.0']:assert s in strings,s
+ assert 'com.terha.conquest' not in strings
+ for name in ['index.html','east-asia.js','mapdata.js','east-asia-terrain.png','world-clean.png','flag-0.png','flag-4.png']:
+  assert z.read('assets/'+name)==(root/'game/assets'/name).read_bytes(),name
+ assert 'assets/dante-city-atlas.webp' not in z.namelist()
+ assert z.read('classes.dex')==zipfile.ZipFile(root/'android/native-shell.zip').read('classes.dex')
+ print('PASS independent app identity, original native DEX, exact geography/terrain/script assets, geometric edition without unit/city atlases')
+(root/'deliverables/SHA256SUMS.txt').write_text(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+p.name+'\n')

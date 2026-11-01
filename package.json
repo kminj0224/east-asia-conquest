@@ -1,0 +1,11 @@
+{
+  "name": "east-asia-conquest",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "node qa/east-asia.cjs"
+  },
+  "devDependencies": {
+    "@napi-rs/canvas": "0.1.100"
+  }
+}
