@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Offline opaque bounds for the original user PNGs; no runtime readback."""
+"""Offline opaque bounds for the original user PNG/WebP files; no runtime readback."""
 import json,pathlib,hashlib
 from PIL import Image
 root=pathlib.Path(__file__).resolve().parents[2]
@@ -15,4 +15,4 @@ for row in manifest.values():
   measured=[b[0],b[1]+top,b[2],b[3]+top]
   assert row['hullBounds']==measured
   row['hullBounds']=measured
-(root/'game/assets/east-asia-unit-bounds.js').write_text('// Offline alpha>=32 bounds measured from the original uploaded PNGs.\nconst EAST_ASIA_UNIT_BOUNDS='+json.dumps(manifest,separators=(',',':'))+';\n')
+(root/'game/assets/east-asia-unit-bounds.js').write_text('// Offline alpha>=32 bounds measured from the original uploaded PNG/WebP files.\nconst EAST_ASIA_UNIT_BOUNDS='+json.dumps(manifest,separators=(',',':'))+';\n')

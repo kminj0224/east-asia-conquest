@@ -1,4 +1,4 @@
-name: Manual APK release
+name: 일본 보병 이미지 v1.2.5 릴리스
 on:
   workflow_dispatch:
 permissions:
@@ -27,7 +27,7 @@ jobs:
           npm ci --no-audit --no-fund
           npm install --no-save --package-lock=false playwright@1.58.2
           npx playwright install --with-deps chromium
-      - name: Verify exact uploaded PNGs
+      - name: Verify exact uploaded PNG and WebP files
         run: |
           python3 tools/east-asia/measure_unit_art.py
           git diff --exit-code -- game/assets/east-asia-unit-bounds.js
@@ -45,7 +45,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: East-Asia-Conquest-v122-checks
+          name: East-Asia-Conquest-v125-checks
           path: |
             qa/east-asia-previews/*
             deliverables/*
@@ -55,4 +55,4 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           SOURCE_SHA: ${{ github.sha }}
         run: |
-          gh release create v1.2.2 deliverables/East-Asia-Conquest-v1.2.2.apk deliverables/SHA256SUMS.txt --target "$SOURCE_SHA" --title '동아시아 콘퀘스트 v1.2.2 — 한국군 지원보병 이미지' --notes-file docs/releases/v1.2.2.md
+          gh release create v1.2.5 deliverables/East-Asia-Conquest-v1.2.5.apk deliverables/SHA256SUMS.txt --target "$SOURCE_SHA" --title '동아시아 콘퀘스트 v1.2.5 — 일본 보병 이미지' --notes-file docs/releases/v1.2.5.md

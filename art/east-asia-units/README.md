@@ -15,3 +15,7 @@ The four tank PNGs are replaced with the revised user attachments. `hullScanTop`
 ## v1.2.2 Korean support infantry
 
 See [One-click main update and release instructions](../../docs/releases/v1.2.2.md). Grenadiers and antitank squads have separate idle/fire PNGs. The machinegun crew shares one left-facing image for both states. Native infantry hooks own facing, bursts, grenade trajectories, antitank muzzle smoke and audio. Hit/ground lookups use the same offline alpha bounds and mirrored draw boxes as the bodies. No PNG is embedded or re-encoded.
+
+## v1.2.5 Japanese infantry
+
+The manifest now records eighteen original image files (four WebP and fourteen PNG). Japanese type 8/9/10 use the supplied grenade/antitank/machinegun squads. Separate idle/fire dimensions preserve aspect ratio; the left-facing machinegun uses baseFacing -1. Japanese rifle images are replaced byte-for-byte. All seven attachments are copied directly, without Base64 or image re-encoding.

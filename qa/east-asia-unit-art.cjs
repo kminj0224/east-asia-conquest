@@ -46,7 +46,7 @@ new Function('require','__dirname',prefix+`
   }finally{run('ctx.drawImage=oldArtDraw;drawMuzzleIllustration=oldFlashDraw')}
  }
  // Unselected countries/types keep geometry and never accidentally load old national bodies.
- for(let f=0;f<6;f++)for(let type=0;type<run('TYPES.length');type++)assert.equal(run('eastAsiaUnitHasArt({f:'+f+',type:'+type+'})'),([0,2].includes(f)&&[0,1,14].includes(type))||(f===0&&[8,9,10].includes(type)));
+ for(let f=0;f<6;f++)for(let type=0;type<run('TYPES.length');type++)assert.equal(run('eastAsiaUnitHasArt({f:'+f+',type:'+type+'})'),([0,2].includes(f)&&[0,1,14].includes(type))||([0,2].includes(f)&&[8,9,10].includes(type)));
  assert(run('baekRifleArt.idleReady===false&&stetopiaTankArt[1].idleReady===false'));
  assert(run('battlefieldEffects.idleReady&&combatProjectileArt.idleReady&&smokeFramesArt.idleReady'));
  assert.equal(run('JSON.stringify(impactLayers({f:2,type:1},{type:1}))'),'["armorSmoke"]');

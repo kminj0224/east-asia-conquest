@@ -116,7 +116,7 @@
       1432,
       1080
     ],
-    "sha256": "4eb5ef4df580c2f9a50d4a7c79e185c211a613c1346d2cbd60fed6c113510082"
+    "sha256": "20bb3aad9fecb8f6fe8dd6f22f35a77f49a42fb5f90f593605ea8e73a6fd68a1"
   },
   "jp-rifle-fire": {
     "file": "eastasia-jp-rifle-fire.png",
@@ -129,7 +129,7 @@
       1476,
       1014
     ],
-    "sha256": "b3685c90d8f0d3d9153abd4c2c46f71b7884b85c6650aac51bd335a2f96a8b28"
+    "sha256": "a1359c4ffdfedc9f9f724f129623a1501d7802fd5791ecb01afc8d1d49d3e220"
   },
   "kr-antitank-idle": {
     "file": "eastasia-kr-antitank-idle.png",
@@ -195,5 +195,70 @@
       1057
     ],
     "sha256": "8be51137a303ba8fab23fe2dca791644f9d2b653ff907547ac2aa5e461282449"
+  },
+  "jp-grenadier-idle": {
+    "file": "eastasia-jp-grenadier-idle.webp",
+    "uploadedName": "1000068704.webp",
+    "width": 1448,
+    "height": 1086,
+    "opaqueBounds": [
+      8,
+      7,
+      1448,
+      1074
+    ],
+    "sha256": "7cb97f8e9a03979e1ef5fde9075c09ce84724db950c299017d5ddc3b0ff5da9c"
+  },
+  "jp-grenadier-fire": {
+    "file": "eastasia-jp-grenadier-fire.webp",
+    "uploadedName": "1000068705.webp",
+    "width": 1446,
+    "height": 1086,
+    "opaqueBounds": [
+      7,
+      5,
+      1438,
+      1063
+    ],
+    "sha256": "425554d74cb705fa2a98703a6849039101eed78b2d771df3e7a56bde9f59ec36"
+  },
+  "jp-antitank-idle": {
+    "file": "eastasia-jp-antitank-idle.webp",
+    "uploadedName": "1000068706.webp",
+    "width": 1448,
+    "height": 1086,
+    "opaqueBounds": [
+      36,
+      7,
+      1435,
+      1083
+    ],
+    "sha256": "dee5c24dd24bf964b3e58ff79202cc3dd3ef9e9c36c1ac58e77064ed9b07cf92"
+  },
+  "jp-antitank-fire": {
+    "file": "eastasia-jp-antitank-fire.webp",
+    "uploadedName": "1000068707.webp",
+    "width": 1446,
+    "height": 1086,
+    "opaqueBounds": [
+      9,
+      9,
+      1437,
+      1062
+    ],
+    "sha256": "b20e98238583480662c3395b4906617d34ce7514ca7b8555ffebe04f3906060e"
+  },
+  "jp-machinegun": {
+    "file": "eastasia-jp-machinegun.png",
+    "uploadedName": "1000068708.png",
+    "width": 1446,
+    "height": 1086,
+    "opaqueBounds": [
+      8,
+      48,
+      1445,
+      1064
+    ],
+    "sha256": "86977bed9cb7eb1caa66b81bd5ddff1f0d21b83587073fd011d7a4698145de17"
   }
 }
