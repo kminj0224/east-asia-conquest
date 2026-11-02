@@ -1,5 +1,4 @@
 {
-  "version": "1.2.1",
-  "source_sha256": "17a772dbcb4af623fa3257ae3f5858672e0e8967e79254455414bb7f1e075d01",
-  "parts": 11
+  "version": "1.2.7",
+  "description": "Chinese infantry WebP sprites and native firing effects"
 }

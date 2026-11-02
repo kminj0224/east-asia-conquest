@@ -260,5 +260,96 @@
       1064
     ],
     "sha256": "86977bed9cb7eb1caa66b81bd5ddff1f0d21b83587073fd011d7a4698145de17"
+  },
+  "cn-antitank-fire": {
+    "file": "eastasia-cn-antitank-fire.webp",
+    "uploadedName": "imagegen-cn-antitank-fire",
+    "width": 1448,
+    "height": 1086,
+    "opaqueBounds": [
+      36,
+      8,
+      1439,
+      1076
+    ],
+    "sha256": "bfa4516e498e2a9811a139b732d35c0557b3e0457405029e0ac8bc985e39f855"
+  },
+  "cn-antitank-idle": {
+    "file": "eastasia-cn-antitank-idle.webp",
+    "uploadedName": "imagegen-cn-antitank-idle",
+    "width": 1448,
+    "height": 1086,
+    "opaqueBounds": [
+      39,
+      12,
+      1429,
+      1081
+    ],
+    "sha256": "238a900b14dbabe5b6d12308fb843908c79c901037e9776ec40dcc03d36d200c"
+  },
+  "cn-grenadier-fire": {
+    "file": "eastasia-cn-grenadier-fire.webp",
+    "uploadedName": "imagegen-cn-grenadier-fire",
+    "width": 1448,
+    "height": 1086,
+    "opaqueBounds": [
+      32,
+      13,
+      1427,
+      1076
+    ],
+    "sha256": "6283357a84868b462508d159cfc1b4b4146c45b0b85672d68f256cf54a28099e"
+  },
+  "cn-grenadier-idle": {
+    "file": "eastasia-cn-grenadier-idle.webp",
+    "uploadedName": "imagegen-cn-grenadier-idle",
+    "width": 1448,
+    "height": 1086,
+    "opaqueBounds": [
+      39,
+      13,
+      1434,
+      1080
+    ],
+    "sha256": "6ecaf25510e5c57771fd500c3f5b60640c78cf5a4864ea65f8fc73284863f5aa"
+  },
+  "cn-machinegun": {
+    "file": "eastasia-cn-machinegun.webp",
+    "uploadedName": "imagegen-cn-machinegun",
+    "width": 1448,
+    "height": 1086,
+    "opaqueBounds": [
+      8,
+      133,
+      1434,
+      1013
+    ],
+    "sha256": "638dcfb5a080d86d9229e987915235a14ba8323eb88899eff81e0bb745b56f6c"
+  },
+  "cn-rifle-fire": {
+    "file": "eastasia-cn-rifle-fire.webp",
+    "uploadedName": "imagegen-cn-rifle-fire",
+    "width": 1448,
+    "height": 1086,
+    "opaqueBounds": [
+      21,
+      12,
+      1447,
+      1078
+    ],
+    "sha256": "f1e98590bf71344a493ed237b20b520d8930eeb1519c06662a0f75fac873d617"
+  },
+  "cn-rifle-idle": {
+    "file": "eastasia-cn-rifle-idle.webp",
+    "uploadedName": "1000068832.webp",
+    "width": 1448,
+    "height": 1086,
+    "opaqueBounds": [
+      39,
+      15,
+      1433,
+      1081
+    ],
+    "sha256": "ecdf2bca69203fc35078bb4848829d2dfcc944596a0d6462ca7f94f0a1950866"
   }
 }

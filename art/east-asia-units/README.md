@@ -19,3 +19,7 @@ See [One-click main update and release instructions](../../docs/releases/v1.2.2.
 ## v1.2.5 Japanese infantry
 
 The manifest now records eighteen original image files (four WebP and fourteen PNG). Japanese type 8/9/10 use the supplied grenade/antitank/machinegun squads. Separate idle/fire dimensions preserve aspect ratio; the left-facing machinegun uses baseFacing -1. Japanese rifle images are replaced byte-for-byte. All seven attachments are copied directly, without Base64 or image re-encoding.
+
+## v1.2.7 Chinese infantry
+
+Chinese type 0/8/9/10 use seven transparent WebP files. The rifle idle is the exact user attachment `1000068832.webp`; the other six assets were produced with the built-in imagegen tool using that attachment as the character, equipment and painting style reference, then encoded as lossless WebP preserving alpha. See `chinese-generation-prompts.json` for prompts. Profiles preserve source aspect ratios for idle/fire, face right before engine mirroring, and measure muzzle pixels on firing art. The original renderer owns rifle flashes, grenade/rocket smoke, machinegun bursts and audio.

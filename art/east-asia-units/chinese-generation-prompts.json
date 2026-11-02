@@ -1,0 +1,15 @@
+{
+  "tool": "built-in imagegen",
+  "reference": "1000068832.webp",
+  "transparent_background": true,
+  "commonPrompt": "Three adult Chinese soldiers matching supplied 1000068832.webp: semi-realistic anime painting, digital camouflage, helmets, Chinese flag shoulder patches, vests, boots. Full-body triangular formation center taller/behind, facing right. Landscape 4:3, transparent background, no scene or text. No baked muzzle flashes, projectiles or smoke.",
+  "variants": {
+    "rifle-fire": "Shoulder black bullpup rifles aiming right horizontally.",
+    "grenadier-idle": "Carry compact black dedicated grenade launchers across chest at low ready.",
+    "grenadier-fire": "Shoulder compact black grenade launchers aiming slightly upward right.",
+    "machinegun": "Three-man crew: gunner kneeling behind single tripod mounted heavy machine gun aimed right, assistant feeding belt, third with ammunition box.",
+    "antitank-idle": "Carry substantial olive tubular shoulder rocket launchers lowered diagonally across chest.",
+    "antitank-fire": "Shoulder substantial olive tubular rocket launchers aiming right, clear sights and grips."
+  },
+  "encoding": "lossless WebP with alpha"
+}
