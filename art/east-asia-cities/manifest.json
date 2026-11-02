@@ -1,0 +1,224 @@
+{
+  "style": "hand-painted semi-realistic modern city illustration, direction 1",
+  "files": {
+    "levels": {
+      "file": "eastasia-city-levels.png",
+      "width": 1536,
+      "height": 1024,
+      "sha256": "2fe60427c2d64d5e75fbdd180492188e02c652383872f97b94c160033ed61699"
+    },
+    "capitals-a": {
+      "file": "eastasia-city-capitals-a.png",
+      "width": 2172,
+      "height": 724,
+      "sha256": "c409e775306bae79f47a04f0a2efcc1bd1f5f8d5d357ebd02571991d571efaa2"
+    },
+    "capitals-b": {
+      "file": "eastasia-city-capitals-b.png",
+      "width": 2172,
+      "height": 724,
+      "sha256": "55b4201327b0f81562f4cece58e552d23d6d02e864512409bc24e63e750cd555"
+    }
+  },
+  "sprites": {
+    "level-1": {
+      "atlas": "levels",
+      "region": [
+        0,
+        0,
+        512,
+        470
+      ],
+      "crop": [
+        39,
+        129,
+        463,
+        266
+      ],
+      "drawWidth": 54,
+      "level": 1
+    },
+    "level-2": {
+      "atlas": "levels",
+      "region": [
+        512,
+        0,
+        1010,
+        470
+      ],
+      "crop": [
+        524,
+        80,
+        473,
+        328
+      ],
+      "drawWidth": 62,
+      "level": 2
+    },
+    "level-3": {
+      "atlas": "levels",
+      "region": [
+        1010,
+        0,
+        1536,
+        470
+      ],
+      "crop": [
+        1022,
+        67,
+        495,
+        369
+      ],
+      "drawWidth": 72,
+      "level": 3
+    },
+    "level-4": {
+      "atlas": "levels",
+      "region": [
+        0,
+        470,
+        525,
+        1024
+      ],
+      "crop": [
+        34,
+        546,
+        491,
+        404
+      ],
+      "drawWidth": 84,
+      "level": 4
+    },
+    "level-5": {
+      "atlas": "levels",
+      "region": [
+        525,
+        470,
+        1150,
+        1024
+      ],
+      "crop": [
+        525,
+        480,
+        576,
+        502
+      ],
+      "drawWidth": 96,
+      "level": 5
+    },
+    "capital-0": {
+      "atlas": "capitals-a",
+      "region": [
+        0,
+        0,
+        724,
+        724
+      ],
+      "crop": [
+        19,
+        80,
+        682,
+        615
+      ],
+      "drawWidth": 104,
+      "origin": 0,
+      "city": "서울",
+      "landmark": "광화문"
+    },
+    "capital-1": {
+      "atlas": "capitals-a",
+      "region": [
+        724,
+        0,
+        1448,
+        724
+      ],
+      "crop": [
+        751,
+        37,
+        692,
+        659
+      ],
+      "drawWidth": 104,
+      "origin": 1,
+      "city": "베이징",
+      "landmark": "자금성"
+    },
+    "capital-2": {
+      "atlas": "capitals-a",
+      "region": [
+        1448,
+        0,
+        2172,
+        724
+      ],
+      "crop": [
+        1485,
+        102,
+        670,
+        601
+      ],
+      "drawWidth": 104,
+      "origin": 2,
+      "city": "도쿄",
+      "landmark": "도쿄타워"
+    },
+    "capital-3": {
+      "atlas": "capitals-b",
+      "region": [
+        0,
+        0,
+        724,
+        724
+      ],
+      "crop": [
+        74,
+        74,
+        621,
+        575
+      ],
+      "drawWidth": 104,
+      "origin": 3,
+      "city": "평양",
+      "landmark": "주체사상탑"
+    },
+    "capital-4": {
+      "atlas": "capitals-b",
+      "region": [
+        724,
+        0,
+        1448,
+        724
+      ],
+      "crop": [
+        768,
+        115,
+        619,
+        537
+      ],
+      "drawWidth": 104,
+      "origin": 4,
+      "city": "타이베이",
+      "landmark": "타이베이 101"
+    },
+    "capital-5": {
+      "atlas": "capitals-b",
+      "region": [
+        1448,
+        0,
+        2172,
+        724
+      ],
+      "crop": [
+        1465,
+        108,
+        620,
+        554
+      ],
+      "drawWidth": 104,
+      "origin": 5,
+      "city": "블라디보스토크",
+      "landmark": "금각교"
+    }
+  }
+}

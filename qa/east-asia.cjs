@@ -41,7 +41,7 @@ const run=s=>vm.runInContext(s,b);fs.writeFileSync(path.resolve(__dirname,'canon
  run('focusCapital();selected=null;panelOpen=false;draw(performance.now()+500)');await settle();
  const builds=run('groundViewBuilds');for(let n=0;n<12;n++)run('draw(performance.now()+1000)');
  assert.equal(run('groundViewBuilds'),builds,'stationary map must not rebuild');
- assert.equal(run('eastAsiaClassicBody===rifleSprite'),true,'pre-image body renderer');assert.equal(run('citySprite===cityArtSprite'),true,'pre-image city renderer');
+ assert.equal(run('eastAsiaClassicBody===rifleSprite'),true,'pre-image body renderer');assert.equal(run('citySprite===eastAsiaCitySprite'),true,'modern illustrated city renderer');
  run('let suppressedLegacyNames=0;const savedLegacyNameCheck=isLegacyUnitName;isLegacyUnitName=function(text){const hit=savedLegacyNameCheck(text);if(hit)suppressedLegacyNames++;return hit};sprite(units.find(u=>u.f===0),pxy(units.find(u=>u.f===0).tile),performance.now());isLegacyUnitName=savedLegacyNameCheck');
  assert.equal(run('suppressedLegacyNames'),2,'old stroke/fill labels suppressed while classic body remains');assert.equal(run('unitNameBeingDrawn'),null);
  assert.equal(reads,0,'no pixel scanning in runtime renderer');

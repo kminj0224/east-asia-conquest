@@ -1,6 +1,6 @@
 import pathlib,zipfile,struct,hashlib
 root=pathlib.Path(__file__).resolve().parents[1]
-p=root/'deliverables/East-Asia-Conquest-v1.2.5.apk'
+p=root/'deliverables/East-Asia-Conquest-v1.2.6.apk'
 with zipfile.ZipFile(p) as z:
  assert z.testzip() is None
  b=z.read('AndroidManifest.xml');strings=[];off=8
@@ -14,16 +14,18 @@ with zipfile.ZipFile(p) as z:
    start,asize,count=struct.unpack_from('<HHH',b,off+24)
    for j in range(count):
     pos=off+16+start+j*asize;name=struct.unpack_from('<I',b,pos+4)[0]
-    if strings[name]=='versionCode':assert struct.unpack_from('<I',b,pos+16)[0]==10
+    if strings[name]=='versionCode':assert struct.unpack_from('<I',b,pos+16)[0]==11
   off+=s
- assert __import__('json').loads((root/'package.json').read_text())['version']=='1.2.5'
- for s in ['com.eastasia.conquest','com.terha.conquest.MainActivity','동아시아 콘퀘스트','1.2.5']:assert s in strings,s
+ assert __import__('json').loads((root/'package.json').read_text())['version']=='1.2.6'
+ for s in ['com.eastasia.conquest','com.terha.conquest.MainActivity','동아시아 콘퀘스트','1.2.6']:assert s in strings,s
  assert 'com.terha.conquest' not in strings
- for name in ['index.html','east-asia.js','east-asia-units.js','east-asia-unit-bounds.js','tank-art.js','mapdata.js','world-natural.png','natural-detail-5-3.jpg','natural-ownership-data.js','world-clean.png','flag-0.png','flag-4.png']:
+ for name in ['index.html','east-asia.js','east-asia-units.js','east-asia-unit-bounds.js','east-asia-city-data.js','east-asia-cities.js','tank-art.js','mapdata.js','world-natural.png','natural-detail-5-3.jpg','natural-ownership-data.js','world-clean.png','flag-0.png','flag-4.png']:
   assert z.read('assets/'+name)==(root/'game/assets'/name).read_bytes(),name
  for name in ['eastasia-kr-tank.png','eastasia-kr-elite.png','eastasia-kr-rifle-idle.png','eastasia-kr-rifle-fire.png','eastasia-jp-tank.png','eastasia-jp-elite.png','eastasia-jp-rifle-idle.png','eastasia-jp-rifle-fire.png','battlefield-effects.webp','combat-projectiles.webp','smoke-flow.webp','dirt-sequence.webp','explosion-sequence.webp']:
   assert z.read('assets/'+name)==(root/'game/assets'/name).read_bytes(),name
  for row in __import__('json').loads((root/'art/east-asia-units/manifest.json').read_text()).values():
+  assert z.read('assets/'+row['file'])==(root/'game/assets'/row['file']).read_bytes(),row['file']
+ for row in __import__('json').loads((root/'art/east-asia-cities/manifest.json').read_text())['files'].values():
   assert z.read('assets/'+row['file'])==(root/'game/assets'/row['file']).read_bytes(),row['file']
  assert 'assets/dante-city-atlas.webp' not in z.namelist()
  assert z.read('classes.dex')==zipfile.ZipFile(root/'android/native-shell.zip').read('classes.dex')
