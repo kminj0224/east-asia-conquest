@@ -19,7 +19,17 @@ const EAST_ASIA_SUPPORT={
  9:{art:eastAsiaSupportArt[9],source:'kr-antitank',baseFacing:1,width:64,height:48,highResolution:true,muzzles:rightInfantryMuzzles([[506,281],[1004,153],[1422,281]],1448,1086),projectile:'baekRocket'},
  10:{art:eastAsiaSupportArt[10],source:'kr-machinegun',baseFacing:-1,width:64,height:48,highResolution:true,muzzles:baekMuzzles([[20,398]]),burst:true}
 };
-infantryArtProfile=function(u){return u.type===0?EAST_ASIA_RIFLES[u.f]||null:u.f===0?EAST_ASIA_SUPPORT[u.type]||null:null};
+const eastAsiaJapaneseSupportArt={
+ 8:loadBaekArt('eastasia-jp-grenadier-idle.webp','eastasia-jp-grenadier-fire.webp'),
+ 9:loadBaekArt('eastasia-jp-antitank-idle.webp','eastasia-jp-antitank-fire.webp'),
+ 10:loadBaekArt('eastasia-jp-machinegun.png')
+};
+const EAST_ASIA_JAPANESE_SUPPORT={
+ 8:{art:eastAsiaJapaneseSupportArt[8],source:'jp-grenadier',baseFacing:1,width:48*1446/1086,idleWidth:64,height:48,highResolution:true,muzzles:rightInfantryMuzzles([[543,238],[1019,102],[1408,251]],1446,1086,48*1446/1086,48),projectile:'baekGrenade',flashAngle:.4},
+ 9:{art:eastAsiaJapaneseSupportArt[9],source:'jp-antitank',baseFacing:1,width:48*1446/1086,idleWidth:64,height:48,highResolution:true,muzzles:rightInfantryMuzzles([[538,278],[1001,164],[1427,285]],1446,1086,48*1446/1086,48),projectile:'baekRocket'},
+ 10:{art:eastAsiaJapaneseSupportArt[10],source:'jp-machinegun',baseFacing:-1,width:48*1446/1086,height:48,highResolution:true,muzzles:[[26,405]].map(([x,y])=>({x:(x/1446-.5)*48*1446/1086,y:14-48+y/1086*48})),burst:true}
+};
+infantryArtProfile=function(u){return u.type===0?EAST_ASIA_RIFLES[u.f]||null:(u.f===0?EAST_ASIA_SUPPORT:u.f===2?EAST_ASIA_JAPANESE_SUPPORT:{})[u.type]||null};
 const eastAsiaTankArt={
  '0:1':loadBaekArt('eastasia-kr-tank.png'),
  '0:14':loadBaekArt('eastasia-kr-elite.png'),
@@ -55,7 +65,7 @@ combatImpactProfile=function(u){return eastAsiaImpactSound(u.f===2&&[1,13,14].in
 Object.assign(window.Terha,{infantryArtProfile,isBaekTank,isStetopiaTank,baekTankProfile,combatWeaponProfile,combatImpactProfile});
 // Compile the original hit/ground lookup layout from offline opaque bounds.
 // Every formation tier shares the same anchored art, as in Terha.
-for(const f of [0,2])for(const type of (f===0?[0,1,8,9,10,14]:[0,1,14])){
+for(const f of [0,2])for(const type of [0,1,8,9,10,14]){
  const key=f+':'+type,hits=[],feet=[];
  for(const firing of [false,true])for(let direction=0;direction<16;direction++){
   const facing=Math.cos(direction*Math.PI/8)<0?-1:1;
