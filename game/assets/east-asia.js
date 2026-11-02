@@ -18,9 +18,7 @@ for(const name of ['adjustCityRoster','adjustCityPlacement','applyBaekCityNames'
 createHansaBridges=()=>[];isHansaSupplyCity=()=>false;hansaBridgeConnected=()=>true;
 // The unmodified Terha natural map renderer owns terrain, ownership and screen caches.
 addAmbientScene=()=>{};
-photoCityProfile=()=>null;
-cityBuildingLayout=cityArtBuildingLayout;
-citySprite=cityArtSprite;
+installEastAsiaCityArt();
 // rifleSprite is the exact pre-image renderer: soldiers, barrels, wheels, wings and hulls.
 const eastAsiaClassicBody=rifleSprite;
 const eastAsiaIllustratedBody=sprite;
