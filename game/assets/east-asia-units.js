@@ -37,6 +37,13 @@ const EAST_ASIA_JAPANESE_SUPPORT={
  9:{art:eastAsiaJapaneseSupportArt[9],source:'jp-antitank',baseFacing:1,width:48*1446/1086,idleWidth:64,height:48,highResolution:true,muzzles:rightInfantryMuzzles([[538,278],[1001,164],[1427,285]],1446,1086,48*1446/1086,48),projectile:'baekRocket'},
  10:{art:eastAsiaJapaneseSupportArt[10],source:'jp-machinegun',baseFacing:-1,width:48*1446/1086,height:48,highResolution:true,muzzles:[[26,405]].map(([x,y])=>({x:(x/1446-.5)*48*1446/1086,y:14-48+y/1086*48})),burst:true}
 };
+// Requested 6% reduction for Korean/Japanese HMGs, anchored to the opaque feet.
+for(const [profile,source]of [[EAST_ASIA_SUPPORT[10],'kr-machinegun'],[EAST_ASIA_JAPANESE_SUPPORT[10],'jp-machinegun']]){
+ const b=EAST_ASIA_UNIT_BOUNDS[source],foot=b.opaqueBounds[3]/b.height;
+ profile.footY=14-profile.height*(1-foot);profile.idleFoot=profile.fireFoot=foot;
+ profile.width*=.94;profile.height*=.94;
+ profile.muzzles=profile.muzzles.map(m=>({x:m.x*.94,y:14+(m.y-14)*.94}));
+}
 const eastAsiaChineseSupportArt={
  8:loadBaekArt('eastasia-cn-grenadier-idle.webp','eastasia-cn-grenadier-fire.webp'),
  9:loadBaekArt('eastasia-cn-antitank-idle.webp','eastasia-cn-antitank-fire.webp'),
@@ -85,7 +92,7 @@ for(const [key,a] of Object.entries(EAST_ASIA_TANKS)){
  a.yOffset=(a.h-source.opaqueBounds[3])/a.w*a.drawWidth;
  a.shadowWidth=EAST_ASIA_HULL_WIDTH*tankVisualMultiplier({f,type})*.45;
 }
-function eastAsiaUnitHasArt(u){return !!(infantryArtProfile(u)||EAST_ASIA_TANKS[u.f+':'+u.type])}
+function eastAsiaUnitHasArt(u){return !!(infantryArtProfile(u)||EAST_ASIA_TANKS[u.f+':'+u.type]||eastAsiaSP(u))}
 isBaekTank=function(u){return !!EAST_ASIA_TANKS[u.f+':'+u.type]};
 // Japan is a conventional cannon tank, not Stetopia's fictional energy tank.
 isStetopiaTank=function(){return false};

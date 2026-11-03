@@ -7,10 +7,13 @@ initialDiplomacy=()=>factions.map((_,a)=>factions.map((_,b)=>a===b?'self':'neutr
 diplomacy=initialDiplomacy();
 // Keep stable engine type IDs while making all country-exclusive types unavailable everywhere.
 for(const t of TYPES)if(t.special!==undefined)t.special=-99;
+// Retire the light-tank slot without shifting every saved unit type ID.
+Object.assign(TYPES[13],{special:-99,retired:true,name:"",text:""});
+ARMOR.splice(0,ARMOR.length,...ARMOR.filter(k=>k!==13));
 const eastAsiaCanProduce=canProduce;
 canProduce=function(q,k,level=1){return TYPES[k]?.special===undefined&&eastAsiaCanProduce(q,k,level)};
 const eastAsiaMakeUnit=makeUnit;
-makeUnit=function(f,type,tile,level=1){return eastAsiaMakeUnit(f,TYPES[type]?.special!==undefined?0:type,tile,level)};
+makeUnit=function(f,type,tile,level=1){return eastAsiaMakeUnit(f,type===13?1:TYPES[type]?.special!==undefined?0:type,tile,level)};
 // Remove only the original world's scenario placements. Normal turn, logistics and combat stay shared.
 for(const name of ['adjustCityRoster','adjustCityPlacement','applyBaekCityNames','renameCities','reinforceDante','addBaekWesternFleet','seedDanteExpansion','seedRannaGuerrillas','seedFrontlineReinforcements','seedStetopiaSouthCoast','halveSouthernDanteFleet','applyMariaSea','applyHansaIsland','applyHansaBridgeTerrain','relocateHansaDeckShips']){
  if(typeof window[name]==='function')window[name]=()=>false;
@@ -30,7 +33,7 @@ sprite=function(u,p,now){
 unitHitCenter=(u,now=performance.now())=>{if(eastAsiaUnitHasArt(u)){const hit=eastAsiaNativeHitCenter(u,now);if(isBaekTank(u))hit.x+=baekTankRecoil(u,now)*unitBodyVisualScale(u);return hit;}const p=unitVisualPosition(u,now);return{x:p.x,y:p.y+11-23*tankVisualMultiplier(u)}};
 // Independent save identity, with original slots / snapshots and restoration rules.
 const eastAsiaSetup=setup;
-setup=function(...args){const result=eastAsiaSetup(...args);for(const q of cities){const seed=MAP.countryCities[q.origin].find(v=>v.tile===q.tile);if(seed)q.name=seed.name}units=units.filter(u=>TYPES[u.type].special===undefined);for(const f of [6,7])defeatedNotices.add(f);diplomacy=initialDiplomacy();buildRegions();save();updateHUD();return result};
+setup=function(...args){const result=eastAsiaSetup(...args);for(const q of cities){const seed=MAP.countryCities[q.origin].find(v=>v.tile===q.tile);if(seed)q.name=seed.name}eastAsiaRetireLightTanks();units=units.filter(u=>TYPES[u.type].special===undefined);for(const f of [6,7])defeatedNotices.add(f);diplomacy=initialDiplomacy();buildRegions();eastAsiaStartingForces();save();updateHUD();return result};
 // Every flag is an actual national flag in all retained menus and scene markers.
 for(let f=0;f<factions.length;f++){const im=new Image();im.src='flag-'+f+'.png';flagImages[f]=im}
 Object.assign(window.Terha,{setup,initialDiplomacy,canProduce,makeUnit,unitHitCenter,eastAsiaSchema:EAST_ASIA_SCHEMA});
@@ -48,3 +51,8 @@ for(const t of tiles)t.river=t.terrain===4;
 function eastAsiaGeoPoint([lon,lat]){const b=MAP.bounds;return{x:(lon-b[0])/(b[2]-b[0])*(W-1)*S+S*2/3,y:(b[3]-lat)/(b[3]-b[1])*(H-1)*V+V/2}}
 Object.assign(window.Terha,{moveCost,eastAsiaGeoPoint});
 RANNA_RIVER_TILES.clear();for(const i of MAP.riverTiles)RANNA_RIVER_TILES.add(i);
+
+// Saved campaigns keep their current armies; only the removed type is migrated.
+const eastAsiaMigrateArmy=migrateArmy;
+migrateArmy=function(s){for(const q of s.cities)if(q.queue?.type===13)q.queue.type=1;const result=eastAsiaMigrateArmy(s);eastAsiaRetireLightTanks();return result};
+Object.assign(window.Terha,{migrateArmy});

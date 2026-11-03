@@ -1,5 +1,11 @@
 # Korean and Japanese units
 
+## v1.2.11 national self-propelled artillery and HMG scale
+
+Six byte-exact WebP attachments supply Korean K9 (`1000068913.webp` idle / `1000068912.webp` elevated), Japanese Type 99 (`1000068911.webp` / `1000068910.webp`) and Chinese PLZ-05 (`1000068909.webp` / `1000068908.webp`). The manifest records hashes and alpha>=32 hull bounds below y=600. Each pose maps its measured track width to 64 native world pixels, centers that hull, and anchors its track bottom at y=11 after the original heavy-unit transform. Source aspect ratio and transparency stay intact. Native aiming, facing, muzzle effects, projectiles, sound and impact ground tables use the same transform. No per-frame pixel scans occur.
+
+Korean/Japanese machinegun profiles scale width, height and muzzle coordinates by 0.94 about their original opaque foot anchor. Offline hit/ground tables derive from those final profiles. Original image bytes stay unchanged. `qa/east-asia-artillery-forces.cjs` verifies actual Canvas transforms in 48 artillery states, starting rosters and old-save light-tank migration; the support-art regression verifies mirrored HMG muzzles.
+
 The thirteen `game/assets/eastasia-*.png` files are the exact user-supplied RGBA PNGs. No generated replacement, resizing, recoloring or background flattening is applied. `manifest.json` records their supplied names, dimensions, SHA-256 and opaque bounds.
 
 Run `python3 tools/east-asia/measure_unit_art.py` (Pillow) to verify the source hashes and rebuild the offline bounds. `east-asia-units.js` maps those bounds into the original hit/ground lookup. Muzzles are measured in source pixels. Infantry source art faces right; Korean K1 faces right and the other three tanks face left. Facing follows the shared original aim/move hooks. Bodies render through the original rifle/tank code, including 1.4 armor scaling and recoil, not a second custom sprite implementation.

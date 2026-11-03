@@ -7,7 +7,7 @@ new Function('require','__dirname',prefix+`
  await settle();run('setup();started=true;setAppScreen("game")');await settle();
  run('globalThis.originalVehicle=drawVehicle;globalThis.vehicleScales=[];drawVehicle=function(...args){const m=ctx.getTransform();vehicleScales.push(Math.hypot(m.a,m.b));return originalVehicle(...args)}');
  let states=0;
- for(let f=0;f<8;f++)for(const type of [1,13,14])for(const level of [1,2,3,4])for(const side of [-1,1]){
+ for(let f=0;f<8;f++)for(const type of [1,14])for(const level of [1,2,3,4])for(const side of [-1,1]){
   const multiplier=f===0&&type===1?1.06:1.1;
   run('units=[];moving=[];fireMotions.clear();fx=[];vehicleScales=[];ctx.setTransform(1,0,0,1,0,0);globalThis.probe=makeUnit('+f+','+type+',cities.find(q=>q.f===0).tile,'+level+');probe.angle='+side+'===1?0:Math.PI;probe.tankFacing='+side);
   assert(Math.abs(run('unitBodyVisualScale(probe)')-1.4*multiplier)<1e-10,'one requested tank multiplier');
@@ -28,6 +28,6 @@ new Function('require','__dirname',prefix+`
  assert.equal(run('unitBodyVisualScale({f:0,type:2})'),1.4);
  assert.equal(run('unitBodyVisualScale({f:0,type:21})'),1.3);
  assert.equal(reads,0);assert.deepEqual(errors,[]);
- console.log('PASS '+states+' national tank/type/tier/facing states: Korean regular 106%, all other regular/light/elite tanks 110%, classic body transforms, muzzle/impact alignment, other branches unchanged');process.exit(0);
+ console.log('PASS '+states+' national tank/type/tier/facing states: Korean regular 106%, all other regular/elite tanks 110%, classic body transforms, muzzle/impact alignment, other branches unchanged');process.exit(0);
 })().catch(e=>{console.error(e);process.exit(1)});
 `)(require,__dirname);

@@ -522,5 +522,125 @@
       709
     ],
     "sha256": "834e8a49db321cbd8d3719edd04c198e7a9b09a61e31662adb01c45e6d3629c3"
+  },
+  "kr-sp-idle": {
+    "file": "eastasia-kr-sp-idle.webp",
+    "uploadedName": "1000068913.webp",
+    "width": 1774,
+    "height": 887,
+    "opaqueBounds": [
+      17,
+      103,
+      1755,
+      833
+    ],
+    "hullScanTop": 600,
+    "hullBounds": [
+      293,
+      600,
+      1691,
+      833
+    ],
+    "sha256": "c881552dfb475745ca9b78891c8da02a48c5a49d9198a057a5d657a4a4a3fdc2"
+  },
+  "kr-sp-fire": {
+    "file": "eastasia-kr-sp-fire.webp",
+    "uploadedName": "1000068912.webp",
+    "width": 1774,
+    "height": 887,
+    "opaqueBounds": [
+      134,
+      11,
+      1755,
+      872
+    ],
+    "hullScanTop": 600,
+    "hullBounds": [
+      287,
+      600,
+      1693,
+      872
+    ],
+    "sha256": "8815841fa9650b49b0f7ca94257d99aed1455f463b1cf875c0fa81b944ab9dbf"
+  },
+  "jp-sp-idle": {
+    "file": "eastasia-jp-sp-idle.webp",
+    "uploadedName": "1000068911.webp",
+    "width": 1774,
+    "height": 887,
+    "opaqueBounds": [
+      27,
+      71,
+      1732,
+      844
+    ],
+    "hullScanTop": 600,
+    "hullBounds": [
+      421,
+      600,
+      1722,
+      844
+    ],
+    "sha256": "169d4e84df70004e4e244d80838540834f5ba5e91cb69ac66e9cf7ded735f6e9"
+  },
+  "jp-sp-fire": {
+    "file": "eastasia-jp-sp-fire.webp",
+    "uploadedName": "1000068910.webp",
+    "width": 1774,
+    "height": 887,
+    "opaqueBounds": [
+      173,
+      19,
+      1736,
+      845
+    ],
+    "hullScanTop": 600,
+    "hullBounds": [
+      420,
+      600,
+      1724,
+      845
+    ],
+    "sha256": "c2b24c9d3d86c876b390da438f038606f23316e811adbae5b13502732ebaf04b"
+  },
+  "cn-sp-idle": {
+    "file": "eastasia-cn-sp-idle.webp",
+    "uploadedName": "1000068909.webp",
+    "width": 1774,
+    "height": 887,
+    "opaqueBounds": [
+      30,
+      131,
+      1724,
+      850
+    ],
+    "hullScanTop": 600,
+    "hullBounds": [
+      248,
+      600,
+      1706,
+      850
+    ],
+    "sha256": "901fa4e39b743b35029412bc5c9427d927d560229d9a9eefb37fec933b8db0cc"
+  },
+  "cn-sp-fire": {
+    "file": "eastasia-cn-sp-fire.webp",
+    "uploadedName": "1000068908.webp",
+    "width": 1774,
+    "height": 887,
+    "opaqueBounds": [
+      192,
+      11,
+      1727,
+      873
+    ],
+    "hullScanTop": 600,
+    "hullBounds": [
+      238,
+      600,
+      1707,
+      873
+    ],
+    "sha256": "ef03d42912fd156029ab8c1c766510b624939ea2397a0d52493b8be808a694d5"
   }
 }

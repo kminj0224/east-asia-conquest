@@ -7,7 +7,7 @@ const FACILITIES={aa:{name:'대공포',cost:1200,min:1},airport:{name:'공항',c
 const UPGRADE_COSTS=[0,1800,4200,9500,28000];
 function mixSeed(n){n=(n^n>>>16)>>>0;n=Math.imul(n,0x45d9f3b)>>>0;return(n^n>>>16)>>>0}
 function cityProfile(q){if(!Array.isArray(q.unlockAt)||q.unlockAt.length!==TYPES.length){const previous=q.unlockAt;q.unlockAt=TYPES.map((t,k)=>{if(Array.isArray(previous)&&Number.isInteger(previous[k]))return previous[k];if(k===0)return 1;if(k===19)return 5;if(t.special!==undefined)return q.capital?1:4;const roll=mixSeed((q.seedId??q.id)*931+k*1717+q.origin*301);const ranges={infantry:[1,4],armor:[2,5],artillery:[2,5],helicopter:[3,5],air:[3,5],navy:[1,4]},r=k===11?[2,5]:ranges[t.branch];return r[0]+roll%(r[1]-r[0]+1)}); // Ensure every intermediate expansion opens an additional local production line.
-for(const [level,types]of [[2,[8,9,10,11]],[3,[12,13,15,16]],[4,[1,2,3,14]]])q.unlockAt[types[mixSeed((q.seedId??q.id)+level*631)%types.length]]=Math.min(level,q.unlockAt[types[mixSeed((q.seedId??q.id)+level*631)%types.length]])}
+for(const [level,types]of [[2,[8,9,10,11]],[3,[12,15,16]],[4,[1,2,3,14]]])q.unlockAt[types[mixSeed((q.seedId??q.id)+level*631)%types.length]]=Math.min(level,q.unlockAt[types[mixSeed((q.seedId??q.id)+level*631)%types.length]])}
 for(const group of [INFANTRY,ARMOR,ARTILLERY,[20,21]])for(let j=group.length-2;j>=0;j--)q.unlockAt[group[j]]=Math.min(q.unlockAt[group[j]],q.unlockAt[group[j+1]]);
 if(![11,14,3,21].some(k=>q.unlockAt[k]===5))q.unlockAt[21]=5;
 for(let k=0;k<TYPES.length;k++)if(TYPES[k].special!==undefined)q.unlockAt[k]=q.capital?1:4;
