@@ -6,7 +6,7 @@ const eastAsiaRifleArt={
  1:loadBaekArt('eastasia-cn-rifle-idle.webp','eastasia-cn-rifle-fire.webp'),
  2:loadBaekArt('eastasia-jp-rifle-idle.png','eastasia-jp-rifle-fire.png')
 };
-const EAST_ASIA_CN_MUZZLE_PIXELS={0:[[592,317],[1065,163],[1445,317]],8:[[584,277],[982,91],[1402,270]],9:[[617,325],[1038,146],[1422,325]],10:[[1426,441]]};
+const EAST_ASIA_CN_MUZZLE_PIXELS={0:[[592,315],[1065,164],[1446,315]],8:[[588,276],[989,96],[1408,275]],9:[[628,326],[1051,149],[1435,328]],10:[[1431,441]]};
 function chineseInfantryProfile(type,art,source){
  const fire=EAST_ASIA_UNIT_BOUNDS[source+(type===10?'':'-fire')],idle=EAST_ASIA_UNIT_BOUNDS[source+(type===10?'':'-idle')];
  const width=48*fire.width/fire.height;
