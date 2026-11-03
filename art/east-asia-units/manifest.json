@@ -132,69 +132,69 @@
     "sha256": "a1359c4ffdfedc9f9f724f129623a1501d7802fd5791ecb01afc8d1d49d3e220"
   },
   "kr-antitank-idle": {
-    "file": "eastasia-kr-antitank-idle.png",
-    "uploadedName": "1000068391.png",
+    "file": "eastasia-kr-antitank-idle.webp",
+    "uploadedName": "1000068871.webp",
     "width": 1448,
     "height": 1086,
     "opaqueBounds": [
       29,
-      9,
-      1432,
-      1080
+      6,
+      1431,
+      1079
     ],
-    "sha256": "1cd1678edb21b3e1bf88649a3396a2a94c7e20668fe2a33d593ade847dc0578b"
+    "sha256": "b2ed4467e0aa1ceca47ac9261d17ebfb8bbd59e439707ceb377e29dd978d9752"
   },
   "kr-antitank-fire": {
-    "file": "eastasia-kr-antitank-fire.png",
-    "uploadedName": "1000068392.png",
+    "file": "eastasia-kr-antitank-fire.webp",
+    "uploadedName": "1000068870.webp",
     "width": 1448,
     "height": 1086,
     "opaqueBounds": [
       11,
-      4,
-      1445,
+      2,
+      1444,
       1082
     ],
-    "sha256": "c92072530297b188ef4c41f6051cc00d99666634d8b89f914d804f4480d4651f"
+    "sha256": "e09447186cf14e16f0b278d73acde2990a199ed56c90d3c16040d4b61f37dff9"
   },
   "kr-grenadier-idle": {
-    "file": "eastasia-kr-grenadier-idle.png",
-    "uploadedName": "1000068387.png",
+    "file": "eastasia-kr-grenadier-idle.webp",
+    "uploadedName": "1000068873.webp",
     "width": 1448,
     "height": 1086,
     "opaqueBounds": [
-      28,
-      11,
+      25,
+      7,
       1437,
       1079
     ],
-    "sha256": "1f9ec2c6595ceb2d5cc50c3a9737eb278e6deaaa96fab0b2545a118fa75135dc"
+    "sha256": "4c681323dd8ba3eb5d0bddb665a9ffeb3e754b8b8ab667790165a4e31e26ca45"
   },
   "kr-grenadier-fire": {
-    "file": "eastasia-kr-grenadier-fire.png",
-    "uploadedName": "1000068388.png",
+    "file": "eastasia-kr-grenadier-fire.webp",
+    "uploadedName": "1000068872.webp",
     "width": 1448,
     "height": 1086,
     "opaqueBounds": [
+      14,
       15,
-      8,
-      1441,
-      1080
+      1442,
+      1079
     ],
-    "sha256": "2838b429a1ea893a0d048707b00c20a6c9e2d8fbab6cb4fc0712a96e8abfd2d2"
+    "sha256": "fbe538e354d7968503dfd16f0cf9f7179a9e0bbe0153bfdd41b5f947ac27cd57"
   },
   "kr-machinegun": {
-    "file": "eastasia-kr-machinegun.png",
-    "uploadedName": "1000068390.png",
+    "file": "eastasia-kr-machinegun.webp",
+    "uploadedName": "1000068874.webp",
     "width": 1448,
     "height": 1086,
     "opaqueBounds": [
-      17,
-      61,
+      18,
+      60,
       1442,
-      1057
+      1059
     ],
-    "sha256": "8be51137a303ba8fab23fe2dca791644f9d2b653ff907547ac2aa5e461282449"
+    "sha256": "1fdbdc45e6c09b49d462da181b6ce2d3365ab5fff1dce2656109f2e51ce380cf"
   },
   "jp-grenadier-idle": {
     "file": "eastasia-jp-grenadier-idle.webp",

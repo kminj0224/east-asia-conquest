@@ -18,14 +18,14 @@ const EAST_ASIA_RIFLES={
  2:{art:eastAsiaRifleArt[2],baseFacing:1,width:48*1491/1024,idleWidth:64,height:48,highResolution:true,muzzles:rightInfantryMuzzles([[546,277],[1017,157],[1476,279]],1491,1024,48*1491/1024,48)}
 };
 const eastAsiaSupportArt={
- 8:loadBaekArt('eastasia-kr-grenadier-idle.png','eastasia-kr-grenadier-fire.png'),
- 9:loadBaekArt('eastasia-kr-antitank-idle.png','eastasia-kr-antitank-fire.png'),
- 10:loadBaekArt('eastasia-kr-machinegun.png')
+ 8:loadBaekArt('eastasia-kr-grenadier-idle.webp','eastasia-kr-grenadier-fire.webp'),
+ 9:loadBaekArt('eastasia-kr-antitank-idle.webp','eastasia-kr-antitank-fire.webp'),
+ 10:loadBaekArt('eastasia-kr-machinegun.webp')
 };
 const EAST_ASIA_SUPPORT={
- 8:{art:eastAsiaSupportArt[8],source:'kr-grenadier',baseFacing:1,width:64,height:48,highResolution:true,muzzles:rightInfantryMuzzles([[507,193],[1026,57],[1399,186]],1448,1086),projectile:'baekGrenade',flashAngle:.4},
- 9:{art:eastAsiaSupportArt[9],source:'kr-antitank',baseFacing:1,width:64,height:48,highResolution:true,muzzles:rightInfantryMuzzles([[506,281],[1004,153],[1422,281]],1448,1086),projectile:'baekRocket'},
- 10:{art:eastAsiaSupportArt[10],source:'kr-machinegun',baseFacing:-1,width:64,height:48,highResolution:true,muzzles:baekMuzzles([[20,398]]),burst:true}
+ 8:{art:eastAsiaSupportArt[8],source:'kr-grenadier',baseFacing:1,width:64,height:48,highResolution:true,muzzles:rightInfantryMuzzles([[519,235],[1041,107],[1388,236]],1448,1086),projectile:'baekGrenade',flashAngle:.4},
+ 9:{art:eastAsiaSupportArt[9],source:'kr-antitank',baseFacing:1,width:64,height:48,highResolution:true,muzzles:rightInfantryMuzzles([[502,290],[998,161],[1404,292]],1448,1086),projectile:'baekRocket'},
+ 10:{art:eastAsiaSupportArt[10],source:'kr-machinegun',baseFacing:-1,width:64,height:48,highResolution:true,muzzles:[[32,400]].map(([x,y])=>({x:(x/1448-.5)*64,y:14-48+y/1086*48})),burst:true}
 };
 const eastAsiaJapaneseSupportArt={
  8:loadBaekArt('eastasia-jp-grenadier-idle.webp','eastasia-jp-grenadier-fire.webp'),

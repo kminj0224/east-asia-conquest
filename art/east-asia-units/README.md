@@ -27,3 +27,7 @@ Chinese type 0/8/9/10 use the seven exact transparent WebP attachments supplied 
 ## v1.2.8 North Korean infantry
 
 Faction 3 uses the seven exact uploaded WebP files `1000068855.webp` through `1000068861.webp`, recorded with SHA-256 and offline alpha bounds in the manifest. Rifle, grenadier and antitank have separate idle/fire poses; the heavy machinegun crew shares one file. All source images face left (`baseFacing: -1`); measured firing muzzle pixels use that same unmirrored source coordinate system. The original infantry renderer and audio/effect hooks own aim, mirrored drawing, rifle flashes, grenade arcs, rocket smoke and machinegun bursts. Type IDs 0/8/9/10 and existing save data remain stable.
+
+## v1.2.9 Korean support infantry replacement
+
+Korean type 8/9/10 now use five byte-exact uploaded WebP files: grenadier idle/fire (`1000068873.webp`, `1000068872.webp`), antitank idle/fire (`1000068871.webp`, `1000068870.webp`), and machinegun (`1000068874.webp`). Superseded Korean support PNGs are removed. Rifle art remains unchanged. The offline manifest and firing muzzle calibration match the replacement images; native facing, recoil, effect, audio, hit and ground paths remain in use.
