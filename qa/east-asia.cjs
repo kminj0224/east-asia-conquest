@@ -21,7 +21,7 @@ const run=s=>vm.runInContext(s,b);fs.writeFileSync(path.resolve(__dirname,'canon
  console.log(run('JSON.stringify({cities:cities.length,land:tiles.filter(t=>t.owner>=0).length,units:units.length,names:factions.map(f=>f.name)})'));
  assert.equal(run('cities.length'),Object.values(JSON.parse(fs.readFileSync(path.join(root,'east-asia-map.json'))).countryCities).flat().length);assert.equal(run('tiles.filter(t=>t.owner>=0).length'),3672);
  assert.equal(run('units.some(u=>TYPES[u.type].special!==undefined)'),false);
- assert.equal(run('diplomacy.every((r,a)=>r.every((v,b)=>v===(a===b?"self":"neutral")))'),true);
+ assert.equal(run('JSON.stringify(diplomacy)===JSON.stringify(eastAsiaInitialDiplomacy())'),true);
  assert.equal(run('cities.filter(q=>q.origin===0).length'),23);assert.equal(run('cities.filter(q=>q.origin===2).length'),52);
  for(const name of ['서울','광주','춘천','제주','독도','울릉도','타이베이','도쿄','평양','베이징'])assert(run('cities.some(q=>q.name==='+JSON.stringify(name)+')'),name);
  assert(run('cities.every(q=>tiles[q.tile].owner===q.f)'));
@@ -59,5 +59,5 @@ const run=s=>vm.runInContext(s,b);fs.writeFileSync(path.resolve(__dirname,'canon
  run('menuMode=false;$("modal").style.display="none";declareWar(3)');assert(run('atWar(0,3)'));assert(!run('atWar(0,1)'));
  run('menuMode=false;$("modal").style.display="none"');const ending=run('endTurn()');run('enableAIFastForward()');await drain(ending);assert.equal(run('turn'),2);
  assert.equal(errors.length,0,JSON.stringify(errors.slice(0,5)));
- console.log('PASS 6 country setups, spaced cities, 3672 land, neutral diplomacy, no special units, rendering, save/load, war and full AI turn');process.exit(0);
+ console.log('PASS 6 country setups, spaced cities, 3672 land, specified initial diplomacy, no special units, rendering, save/load, war and full AI turn');process.exit(0);
 })().catch(e=>{console.error(e);process.exit(1)});

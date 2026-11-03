@@ -4,7 +4,8 @@
 const eastAsiaCityAtlases=Object.fromEntries(Object.entries(EAST_ASIA_CITY_DATA.files).map(([key,row])=>[key,loadBaekArt(row.file)]));
 function eastAsiaCityProfile(q){
  const level=Math.max(1,Math.min(5,Math.trunc(Number(q.level))||1));
- const key=q.capital&&EAST_ASIA_CITY_DATA.sprites['capital-'+q.origin]?'capital-'+q.origin:'level-'+level;
+ const origin=q.eastAsiaFoundingOrigin??q.origin;
+ const key=q.capital&&EAST_ASIA_CITY_DATA.sprites['capital-'+origin]?'capital-'+origin:'level-'+level;
  const row=EAST_ASIA_CITY_DATA.sprites[key];
  return{...row,key,art:eastAsiaCityAtlases[row.atlas],width:row.drawWidth};
 }

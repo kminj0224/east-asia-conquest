@@ -1,0 +1,30 @@
+'use strict';
+const path=require('path'),assert=require('assert/strict');
+module.exports=async(page,out)=>{
+ await page.evaluate(()=>{
+  player=0;setup();started=true;setAppScreen('game');menuMode=false;selected=null;panelOpen=false;
+  const north=eastAsiaNorthCities();north.forEach(q=>q.f=0);north.at(-1).f=2;
+  money[0]=50000;buildRegions();updateHUD();
+ });
+ assert(!await page.getByRole('button',{name:'통일 · 30,000',exact:true}).isVisible(),'a foreign-held original northern city blocks unification');
+ await page.evaluate(()=>{eastAsiaNorthCities().at(-1).f=0;buildRegions();updateHUD()});
+ const button=page.getByRole('button',{name:'통일 · 30,000',exact:true});assert(await button.isVisible());
+ await button.click();assert(await page.getByRole('heading',{name:'통일하시겠습니까?',exact:true}).isVisible());
+ await page.getByRole('button',{name:'아니오',exact:true}).click();assert(await button.isVisible());
+ assert.equal(await page.evaluate(()=>money[0]),50000);
+ await page.screenshot({path:path.join(out,'unification-ready.png')});
+ await button.click();await page.getByRole('button',{name:'예',exact:true}).click();
+ assert.equal(await page.evaluate(()=>factions[0].name),'고려연방');
+ assert.equal(await page.evaluate(()=>money[0]),20000);
+ assert.equal(await page.locator('#resources img').getAttribute('src'),'eastasia-goryeo-flag.png');
+ assert(await page.evaluate(()=>atWar(2,0)&&eastAsiaNorthCities().every(q=>q.origin===0&&!occupiedCity(q)&&canProduce(q,0,1))));
+ assert(!await button.isVisible());
+ await page.screenshot({path:path.join(out,'goryeo-federation.png')});
+ await page.evaluate(()=>{save(1);setup()});
+ assert.equal(await page.evaluate(()=>factions[0].name),'대한민국');
+ await page.evaluate(()=>load(1));
+ assert.equal(await page.evaluate(()=>factions[0].name),'고려연방');
+ assert.equal(await page.locator('#resources img').getAttribute('src'),'eastasia-goryeo-flag.png');
+ await page.evaluate(()=>{setup();focusCapital();menuMode=false;selected=null;panelOpen=false;refreshSelection()});
+ console.log('PASS real browser: immutable northern roster, gold unification button, No/Yes, exact 30,000 payment, federation flag/name, homeland production and slot reload');
+};

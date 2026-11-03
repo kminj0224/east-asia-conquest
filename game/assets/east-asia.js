@@ -3,7 +3,7 @@
 const EAST_ASIA_SCHEMA=2;
 const eastAsiaBonuses=['보병 방어 +15%','기갑 공격 +20%','기갑 방어 +15%','도시 수입 +15%','이동 거리 +1','해군 공격 +15%','포병 공격 +15%','균형 전력'];
 factions.forEach((f,i)=>{f.bonus=eastAsiaBonuses[i];delete f.initialBranches;delete f.initialDefenses});
-initialDiplomacy=()=>factions.map((_,a)=>factions.map((_,b)=>a===b?'self':'neutral'));
+initialDiplomacy=eastAsiaInitialDiplomacy;
 diplomacy=initialDiplomacy();
 // Keep stable engine type IDs while making all country-exclusive types unavailable everywhere.
 for(const t of TYPES)if(t.special!==undefined)t.special=-99;
@@ -56,3 +56,5 @@ RANNA_RIVER_TILES.clear();for(const i of MAP.riverTiles)RANNA_RIVER_TILES.add(i)
 const eastAsiaMigrateArmy=migrateArmy;
 migrateArmy=function(s){for(const q of s.cities)if(q.queue?.type===13)q.queue.type=1;const result=eastAsiaMigrateArmy(s);eastAsiaRetireLightTanks();return result};
 Object.assign(window.Terha,{migrateArmy});
+
+installEastAsiaDiplomacy();

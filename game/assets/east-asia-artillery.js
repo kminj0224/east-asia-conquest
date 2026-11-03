@@ -1,9 +1,9 @@
 'use strict';
 // Byte-exact uploaded bodies. Measure tracks offline, never during a frame.
 const EAST_ASIA_SP={
- 0:{source:'kr-sp',muzzle:[153,47]},
- 1:{source:'cn-sp',muzzle:[212,55]},
- 2:{source:'jp-sp',muzzle:[191,46]}
+ 0:{source:'kr-sp',muzzle:[115,57]},
+ 1:{source:'cn-sp',muzzle:[112,64]},
+ 2:{source:'jp-sp',muzzle:[99,56]}
 };
 for(const a of Object.values(EAST_ASIA_SP))a.art=loadBaekArt(EAST_ASIA_UNIT_BOUNDS[a.source+'-idle'].file,EAST_ASIA_UNIT_BOUNDS[a.source+'-fire'].file);
 function eastAsiaSP(u){return u.type===2?EAST_ASIA_SP[u.f]:null}

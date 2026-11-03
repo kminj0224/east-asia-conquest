@@ -525,122 +525,122 @@
   },
   "kr-sp-idle": {
     "file": "eastasia-kr-sp-idle.webp",
-    "uploadedName": "1000068913.webp",
+    "uploadedName": "1000068917.webp",
     "width": 1774,
     "height": 887,
     "opaqueBounds": [
-      17,
-      103,
-      1755,
-      833
+      20,
+      24,
+      1765,
+      863
     ],
     "hullScanTop": 600,
     "hullBounds": [
-      293,
+      289,
       600,
-      1691,
-      833
+      1696,
+      863
     ],
-    "sha256": "c881552dfb475745ca9b78891c8da02a48c5a49d9198a057a5d657a4a4a3fdc2"
+    "sha256": "b2e6c6b54a0bd843f898c385c26d189af3c702fac7b5e0490c30f4d6dbf370c1"
   },
   "kr-sp-fire": {
     "file": "eastasia-kr-sp-fire.webp",
-    "uploadedName": "1000068912.webp",
+    "uploadedName": "1000068918.webp",
     "width": 1774,
     "height": 887,
     "opaqueBounds": [
-      134,
-      11,
-      1755,
-      872
+      96,
+      7,
+      1767,
+      864
     ],
     "hullScanTop": 600,
     "hullBounds": [
-      287,
+      290,
       600,
-      1693,
-      872
+      1696,
+      864
     ],
-    "sha256": "8815841fa9650b49b0f7ca94257d99aed1455f463b1cf875c0fa81b944ab9dbf"
+    "sha256": "45b7bc8ac0799fb8028934a10b982151ee00c5044ee061b797477f5213da8b42"
   },
   "jp-sp-idle": {
     "file": "eastasia-jp-sp-idle.webp",
-    "uploadedName": "1000068911.webp",
+    "uploadedName": "1000068921.webp",
     "width": 1774,
     "height": 887,
     "opaqueBounds": [
-      27,
-      71,
-      1732,
-      844
+      29,
+      51,
+      1750,
+      861
     ],
     "hullScanTop": 600,
     "hullBounds": [
-      421,
+      413,
       600,
-      1722,
-      844
+      1745,
+      861
     ],
-    "sha256": "169d4e84df70004e4e244d80838540834f5ba5e91cb69ac66e9cf7ded735f6e9"
+    "sha256": "9ab71bcf71a59f6256b6b642f958b2e774fce490f734d09c5eb73c723addba8a"
   },
   "jp-sp-fire": {
     "file": "eastasia-jp-sp-fire.webp",
-    "uploadedName": "1000068910.webp",
+    "uploadedName": "1000068922.webp",
     "width": 1774,
     "height": 887,
     "opaqueBounds": [
-      173,
-      19,
-      1736,
-      845
+      81,
+      21,
+      1755,
+      863
     ],
     "hullScanTop": 600,
     "hullBounds": [
-      420,
+      411,
       600,
-      1724,
-      845
+      1748,
+      863
     ],
-    "sha256": "c2b24c9d3d86c876b390da438f038606f23316e811adbae5b13502732ebaf04b"
+    "sha256": "3400001603f1c36a1c07b0c19af1e4d3b4869fb3fecfc3e7a7079c29e7571323"
   },
   "cn-sp-idle": {
     "file": "eastasia-cn-sp-idle.webp",
-    "uploadedName": "1000068909.webp",
+    "uploadedName": "1000068919.webp",
     "width": 1774,
     "height": 887,
     "opaqueBounds": [
-      30,
-      131,
-      1724,
-      850
+      28,
+      87,
+      1749,
+      851
     ],
     "hullScanTop": 600,
     "hullBounds": [
-      248,
+      257,
       600,
-      1706,
-      850
+      1725,
+      851
     ],
-    "sha256": "901fa4e39b743b35029412bc5c9427d927d560229d9a9eefb37fec933b8db0cc"
+    "sha256": "2e9f65b7e4050e8ec749237f67cbbd0ce1f575fe4352e37683ad6e1fc2cedf3f"
   },
   "cn-sp-fire": {
     "file": "eastasia-cn-sp-fire.webp",
-    "uploadedName": "1000068908.webp",
+    "uploadedName": "1000068920.webp",
     "width": 1774,
     "height": 887,
     "opaqueBounds": [
-      192,
-      11,
-      1727,
-      873
+      94,
+      13,
+      1752,
+      853
     ],
     "hullScanTop": 600,
     "hullBounds": [
-      238,
+      256,
       600,
-      1707,
-      873
+      1726,
+      853
     ],
-    "sha256": "ef03d42912fd156029ab8c1c766510b624939ea2397a0d52493b8be808a694d5"
+    "sha256": "dc95f3f9962a0637ed83e8cf4dab9734b25a0d1b84464102dd1d9089fffb44c0"
   }
 }

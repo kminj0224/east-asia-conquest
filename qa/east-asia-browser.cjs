@@ -28,5 +28,6 @@ const delay=ms=>new Promise(r=>setTimeout(r,ms));
  await page.setViewportSize({width:1536,height:672});await page.waitForFunction(()=>screenW===1536&&screenH===672);await page.evaluate(()=>{focusCapital();selected=null;panelOpen=false;refreshSelection()});await assertInside();
  await page.screenshot({path:path.join(out,'bounded-map.png')});
  await require('./east-asia-unit-browser.cjs')(page,out);
+ await require('./east-asia-diplomacy-browser.cjs')(page,out);
  assert.equal(errors.length,0,errors.join('\n'));fs.writeFileSync(path.join(out,'browser-report.json'),JSON.stringify({cache,timing,pan,errors},null,2));console.log('PASS native browser UI, original cache, geometric bodies, ownership refresh, action grid, mobile frame profile',timing);
  }finally{if(browser)await browser.close();server.kill()}})().catch(e=>{console.error(e);process.exitCode=1});

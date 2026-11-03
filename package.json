@@ -1,9 +1,9 @@
 {
   "name": "east-asia-conquest",
-  "version": "1.2.11",
+  "version": "1.2.12",
   "private": true,
   "scripts": {
-    "test": "node qa/east-asia-artillery-forces.cjs && node qa/east-asia-geography.cjs && node qa/east-asia.cjs && node qa/east-asia-unit-art.cjs && node qa/east-asia-support-art.cjs && node qa/east-asia-boundaries.cjs && node qa/east-asia-tank-scale.cjs && node qa/east-asia-city-art.cjs"
+    "test": "node qa/east-asia-diplomacy.cjs && node qa/east-asia-artillery-forces.cjs && node qa/east-asia-geography.cjs && node qa/east-asia.cjs && node qa/east-asia-unit-art.cjs && node qa/east-asia-support-art.cjs && node qa/east-asia-boundaries.cjs && node qa/east-asia-tank-scale.cjs && node qa/east-asia-city-art.cjs"
   },
   "devDependencies": {
     "@napi-rs/canvas": "0.1.100"
