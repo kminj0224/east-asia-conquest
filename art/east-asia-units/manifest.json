@@ -442,5 +442,85 @@
       1055
     ],
     "sha256": "7e21fecb935a26afe0872861acecbfa4b10d237062257e94f685d99190c6271e"
+  },
+  "cn-tank": {
+    "file": "eastasia-cn-tank.webp",
+    "uploadedName": "1000068891.webp",
+    "width": 2172,
+    "height": 724,
+    "opaqueBounds": [
+      21,
+      9,
+      2162,
+      714
+    ],
+    "hullScanTop": 360,
+    "hullBounds": [
+      411,
+      360,
+      2162,
+      714
+    ],
+    "sha256": "3c7f953d48957c7b04086f797b3bcb8504330ccf12cd7a7a6a5cd8be23215d27"
+  },
+  "cn-elite": {
+    "file": "eastasia-cn-elite.webp",
+    "uploadedName": "1000068890.webp",
+    "width": 2171,
+    "height": 724,
+    "opaqueBounds": [
+      10,
+      11,
+      2167,
+      711
+    ],
+    "hullScanTop": 360,
+    "hullBounds": [
+      341,
+      360,
+      2165,
+      711
+    ],
+    "sha256": "9d9210d9cbf4638ad210e393bb0abfc31d0fca62610a5f44f1dd234fdd895527"
+  },
+  "nk-tank": {
+    "file": "eastasia-nk-tank.webp",
+    "uploadedName": "1000068888.webp",
+    "width": 2172,
+    "height": 724,
+    "opaqueBounds": [
+      31,
+      14,
+      2148,
+      712
+    ],
+    "hullScanTop": 360,
+    "hullBounds": [
+      398,
+      360,
+      2148,
+      712
+    ],
+    "sha256": "d07b01a2a3f45191e1702fe401e7e78fa93996eeee6c9df9b5d05d84eab7d498"
+  },
+  "nk-elite": {
+    "file": "eastasia-nk-elite.webp",
+    "uploadedName": "1000068889.webp",
+    "width": 2172,
+    "height": 724,
+    "opaqueBounds": [
+      14,
+      15,
+      2152,
+      709
+    ],
+    "hullScanTop": 360,
+    "hullBounds": [
+      381,
+      360,
+      2152,
+      709
+    ],
+    "sha256": "834e8a49db321cbd8d3719edd04c198e7a9b09a61e31662adb01c45e6d3629c3"
   }
 }

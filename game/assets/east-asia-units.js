@@ -57,7 +57,11 @@ const eastAsiaTankArt={
  '0:1':loadBaekArt('eastasia-kr-tank.png'),
  '0:14':loadBaekArt('eastasia-kr-elite.png'),
  '2:1':loadBaekArt('eastasia-jp-tank.png'),
- '2:14':loadBaekArt('eastasia-jp-elite.png')
+ '2:14':loadBaekArt('eastasia-jp-elite.png'),
+ '1:1':loadBaekArt('eastasia-cn-tank.webp'),
+ '1:14':loadBaekArt('eastasia-cn-elite.webp'),
+ '3:1':loadBaekArt('eastasia-nk-tank.webp'),
+ '3:14':loadBaekArt('eastasia-nk-elite.webp')
 };
 // Actual hex corner-to-corner width plus four world pixels at each hull end.
 // Divide out the native 1.4 armor scale, so it is applied exactly once.
@@ -66,7 +70,11 @@ const EAST_ASIA_TANKS={
  '0:1':{source:'kr-tank',mx:2151,my:224,baseFacing:1},
  '0:14':{source:'kr-elite',mx:8,my:282,baseFacing:-1},
  '2:1':{source:'jp-tank',mx:17,my:128,baseFacing:-1},
- '2:14':{source:'jp-elite',mx:14,my:326,baseFacing:-1}
+ '2:14':{source:'jp-elite',mx:14,my:326,baseFacing:-1},
+ '1:1':{source:'cn-tank',mx:25,my:281,baseFacing:-1},
+ '1:14':{source:'cn-elite',mx:15,my:293,baseFacing:-1},
+ '3:1':{source:'nk-tank',mx:36,my:275,baseFacing:-1},
+ '3:14':{source:'nk-elite',mx:19,my:287,baseFacing:-1}
 };
 for(const [key,a] of Object.entries(EAST_ASIA_TANKS)){
  const [f,type]=key.split(':').map(Number);
@@ -88,12 +96,12 @@ combatImpactProfile=function(u){return eastAsiaImpactSound(u.f===2&&[1,13,14].in
 Object.assign(window.Terha,{infantryArtProfile,isBaekTank,isStetopiaTank,baekTankProfile,combatWeaponProfile,combatImpactProfile});
 // Compile the original hit/ground lookup layout from offline opaque bounds.
 // Every formation tier shares the same anchored art, as in Terha.
-for(const f of [0,1,2,3])for(const type of (f===1||f===3?[0,8,9,10]:[0,1,8,9,10,14])){
+for(const f of [0,1,2,3])for(const type of [0,1,8,9,10,14]){
  const key=f+':'+type,hits=[],feet=[];
  for(const firing of [false,true])for(let direction=0;direction<16;direction++){
   const facing=Math.cos(direction*Math.PI/8)<0?-1:1;
   const profile=infantryArtProfile({f,type});
-  const name=profile?.source?profile.source+(type===10?'':'-'+(firing?'fire':'idle')):(f===0?'kr':f===1?'cn':'jp')+'-'+(type===0?'rifle-'+(firing?'fire':'idle'):type===1?'tank':'elite');
+  const name=profile?(profile.source?profile.source+(type===10?'':'-'+(firing?'fire':'idle')):(f===0?'kr':'jp')+'-rifle-'+(firing?'fire':'idle')):EAST_ASIA_TANKS[key].source;
   const source=EAST_ASIA_UNIT_BOUNDS[name],opaque=source.opaqueBounds;
   let b=opaque,w,h,scale,flip,box;
   if(profile){const p=profile;w=!firing&&p.idleWidth||p.width;h=p.height;scale=1;flip=facing!==(p.baseFacing??-1);box={x:-w/2,y:infantryArtBottom(p,firing)-h}}

@@ -6,7 +6,7 @@ const prefix=source.slice(0,source.indexOf('\n(async()=>{'));
 new Function('require','__dirname',prefix+`
 (async()=>{
  await settle();run('setup();started=true;setAppScreen("game");sound=true;cam.z=1;');await settle();
- for(const f of [0,2])for(const type of [0,1,14])for(const level of [1,2,3,4])for(const side of [-1,1]){
+ for(const f of [0,1,2,3])for(const type of (f===1||f===3?[1,14]:[0,1,14]))for(const level of [1,2,3,4])for(const side of [-1,1]){
   run('units=[];moving=[];fx=[];fireMotions.clear();combatAudio.queue=[];globalThis.probe=makeUnit('+f+','+type+',cities.find(q=>q.f==='+f+').tile,'+level+');probe.angle='+side+'===1?0:Math.PI;probe.rifleFacing=probe.tankFacing='+side+';globalThis.probePoint=pxy(probe.tile)');
   assert(run('eastAsiaUnitHasArt(probe)'));
   // Capture transformed texture boxes and flash origins from the actual renderer.
@@ -14,7 +14,7 @@ new Function('require','__dirname',prefix+`
   try{
    run('sprite(probe,probePoint,performance.now())');
    assert.equal(run('textureCalls.length'),1,'one native idle body');
-   assert(run('textureCalls[0].src.includes('+(f===0?'"kr-"':'"jp-"')+')'));
+   assert(run('textureCalls[0].src.includes('+JSON.stringify(['kr-','cn-','jp-','nk-'][f])+')'));
    if(type===0)assert(run('textureCalls[0].src.endsWith("idle.png")'));
    if(type!==0){
     const fit=run('(()=>{const call=textureCalls[0],a=EAST_ASIA_TANKS[probe.f+":"+probe.type],source=EAST_ASIA_UNIT_BOUNDS[a.source],hull=source.hullBounds,[x,y,w,h]=call.args,m=call.m;const ends=[hull[0],hull[2]].map(px=>m.a*(x+px/source.width*w)+m.c*y+m.e).sort((a,b)=>a-b);return{left:probePoint.x-S*2/3-ends[0],right:ends[1]-(probePoint.x+S*2/3),foot:m.d*(y+source.opaqueBounds[3]/source.height*h)+m.f-probePoint.y,ratio:w/h,sourceRatio:source.width/source.height,hit:unitHitCenter(probe).x-probePoint.x}})()');
@@ -46,7 +46,7 @@ new Function('require','__dirname',prefix+`
   }finally{run('ctx.drawImage=oldArtDraw;drawMuzzleIllustration=oldFlashDraw')}
  }
  // Unselected countries/types keep geometry and never accidentally load old national bodies.
- for(let f=0;f<6;f++)for(let type=0;type<run('TYPES.length');type++)assert.equal(run('eastAsiaUnitHasArt({f:'+f+',type:'+type+'})'),([0,2].includes(f)&&[0,1,14].includes(type))||([0,2].includes(f)&&[8,9,10].includes(type))||([1,3].includes(f)&&[0,8,9,10].includes(type)));
+ for(let f=0;f<6;f++)for(let type=0;type<run('TYPES.length');type++)assert.equal(run('eastAsiaUnitHasArt({f:'+f+',type:'+type+'})'),([0,1,2,3].includes(f)&&[0,1,8,9,10,14].includes(type)));
  assert(run('baekRifleArt.idleReady===false&&stetopiaTankArt[1].idleReady===false'));
  assert(run('battlefieldEffects.idleReady&&combatProjectileArt.idleReady&&smokeFramesArt.idleReady'));
  assert.equal(run('JSON.stringify(impactLayers({f:2,type:1},{type:1}))'),'["armorSmoke"]');
@@ -57,8 +57,8 @@ new Function('require','__dirname',prefix+`
  run('setup();units=[];fx=[];moving=[];cam.z=.5;ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle="#6d8b80";ctx.fillRect(0,0,1280,800);for(const [row,f] of [0,2].entries())for(const [col,type] of [0,1,14].entries())for(const side of [-1,1]){const u=makeUnit(f,type,cities.find(q=>q.f===f).tile,1);u.tankFacing=u.rifleFacing=side;const p={x:150+col*410+(side===1?170:0),y:120+row*360};ctx.save();ctx.translate(p.x,p.y);ctx.scale(2.7,2.7);sprite(u,{x:0,y:0},performance.now());ctx.restore();fireMotions.set(u.id,{start:performance.now()-20,duration:450});ctx.save();ctx.translate(p.x,p.y+155);ctx.scale(2.7,2.7);sprite(u,{x:0,y:0},performance.now());ctx.restore()}');
  fs.writeFileSync(path.join(__dirname,'east-asia-previews/unit-art.png'),main.toBuffer('image/png'));
  main.width=1920;
- run('units=[];moving=[];fireMotions.clear();ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle="#6d8b80";ctx.fillRect(0,0,1920,800);globalThis.fitLabels=["한국 전차 · K1","한국 정예전차 · K2","일본 전차 · 90식","일본 정예전차 · 10식"];for(const [col,[f,type]]of [[0,1],[0,14],[2,1],[2,14]].entries()){ctx.fillStyle="#fff4d5";ctx.textAlign="center";ctx.font="bold 19px Terha,sans-serif";ctx.fillText(fitLabels[col],240+col*480,29);for(let row=0;row<4;row++){const side=row%2?-1:1,u=makeUnit(f,type,cities.find(q=>q.f===f).tile,1);u.tankFacing=side;u.angle=side===1?0:Math.PI;if(row>=2)fireMotions.set(u.id,{start:performance.now()-20,duration:450});ctx.save();ctx.translate(240+col*480,137+row*185);ctx.scale(2.3,2.3);poly(hexPoints({x:0,y:0}),"#446b5e");ctx.strokeStyle="#ead48d";ctx.lineWidth=.7;ctx.beginPath();hexPoints({x:0,y:0}).forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));ctx.closePath();ctx.stroke();sprite(u,{x:0,y:0},performance.now());ctx.restore()}}');
+ run('units=[];moving=[];fireMotions.clear();ctx.setTransform(1,0,0,1,0,0);ctx.fillStyle="#6d8b80";ctx.fillRect(0,0,1920,800);globalThis.fitLabels=["중국 전차 · 96식","중국 정예전차 · 99식","북한 전차 · 선군호","북한 정예전차 · 신형 천마호"];for(const [col,[f,type]]of [[1,1],[1,14],[3,1],[3,14]].entries()){ctx.fillStyle="#fff4d5";ctx.textAlign="center";ctx.font="bold 19px Terha,sans-serif";ctx.fillText(fitLabels[col],240+col*480,29);for(let row=0;row<4;row++){const side=row%2?-1:1,u=makeUnit(f,type,cities.find(q=>q.f===f).tile,1);u.tankFacing=side;u.angle=side===1?0:Math.PI;if(row>=2)fireMotions.set(u.id,{start:performance.now()-20,duration:450});ctx.save();ctx.translate(240+col*480,137+row*185);ctx.scale(2.3,2.3);poly(hexPoints({x:0,y:0}),"#446b5e");ctx.strokeStyle="#ead48d";ctx.lineWidth=.7;ctx.beginPath();hexPoints({x:0,y:0}).forEach(([x,y],i)=>i?ctx.lineTo(x,y):ctx.moveTo(x,y));ctx.closePath();ctx.stroke();sprite(u,{x:0,y:0},performance.now());ctx.restore()}}');
  fs.writeFileSync(path.join(__dirname,'east-asia-previews/tank-fit.png'),main.toBuffer('image/png'));
- console.log('PASS 96 country/type/tier/facing states: exact original PNGs, Korean regular tank at 106% and other hulls at 110%, anchored opaque tracks, source aspect ratio, native idle/fire/recoil, mirrored barrel/flash alignment, rifle/tank PCM, conventional Japanese cannon impacts, fallback geometry and no runtime readback');process.exit(0);
+ console.log('PASS 160 country/type/tier/facing states: exact uploaded PNG/WebP files, Korean regular tank at 106% and other hulls at 110%, anchored opaque tracks, source aspect ratio, native idle/fire/recoil, mirrored barrel/flash alignment, rifle/tank PCM, conventional Japanese cannon impacts, fallback geometry and no runtime readback');process.exit(0);
 })().catch(e=>{console.error(e);process.exit(1)});
 `)(require,__dirname);

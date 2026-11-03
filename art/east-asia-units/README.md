@@ -31,3 +31,7 @@ Faction 3 uses the seven exact uploaded WebP files `1000068855.webp` through `10
 ## v1.2.9 Korean support infantry replacement
 
 Korean type 8/9/10 now use five byte-exact uploaded WebP files: grenadier idle/fire (`1000068873.webp`, `1000068872.webp`), antitank idle/fire (`1000068871.webp`, `1000068870.webp`), and machinegun (`1000068874.webp`). Superseded Korean support PNGs are removed. Rifle art remains unchanged. The offline manifest and firing muzzle calibration match the replacement images; native facing, recoil, effect, audio, hit and ground paths remain in use.
+
+## Chinese and North Korean tank bodies
+
+The four original transparent WebP attachments are copied byte-for-byte: Chinese regular Type 96 (`1000068891.webp`), Chinese elite Type 99 (`1000068890.webp`), North Korean regular Songun-ho (`1000068888.webp`), and North Korean elite new Chonma (`1000068889.webp`). The manifest records source names, SHA-256, alpha bounds and hull-only bounds below source y=360. All four face left and use the existing tank renderer, 110% hull width, opaque-track ground anchor, mirrored muzzle flashes, recoil, conventional cannon audio and calibrated hit/ground tables. Type IDs 1/14 and saves are unchanged. `qa/east-asia-unit-art.cjs` checks all eight national tanks and renders the new four in both directions, idle and firing.
