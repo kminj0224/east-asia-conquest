@@ -1,6 +1,6 @@
 {
   "name": "east-asia-conquest",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "private": true,
   "scripts": {
     "test": "node qa/east-asia-geography.cjs && node qa/east-asia.cjs && node qa/east-asia-unit-art.cjs && node qa/east-asia-support-art.cjs && node qa/east-asia-boundaries.cjs && node qa/east-asia-tank-scale.cjs && node qa/east-asia-city-art.cjs"

@@ -23,3 +23,7 @@ The manifest now records eighteen original image files (four WebP and fourteen P
 ## v1.2.7 Chinese infantry
 
 Chinese type 0/8/9/10 use the seven exact transparent WebP attachments supplied by the user: rifle idle/fire (`1000068832.webp`, `1000068848.webp`), grenadier idle/fire (`1000068840.webp`, `1000068846.webp`), heavy machinegun crew (`1000068845.webp`), and antitank idle/fire (`1000068844.webp`, `1000068847.webp`). Files are copied byte-for-byte with no re-encoding. The manifest records the attachment names and SHA-256 hashes. Profiles preserve the source aspect ratio and right-facing baseline, with firing muzzle coordinates measured on the supplied art. The original renderer owns rifle flashes, grenade/rocket smoke, machinegun bursts and audio.
+
+## v1.2.8 North Korean infantry
+
+Faction 3 uses the seven exact uploaded WebP files `1000068855.webp` through `1000068861.webp`, recorded with SHA-256 and offline alpha bounds in the manifest. Rifle, grenadier and antitank have separate idle/fire poses; the heavy machinegun crew shares one file. All source images face left (`baseFacing: -1`); measured firing muzzle pixels use that same unmirrored source coordinate system. The original infantry renderer and audio/effect hooks own aim, mirrored drawing, rifle flashes, grenade arcs, rocket smoke and machinegun bursts. Type IDs 0/8/9/10 and existing save data remain stable.

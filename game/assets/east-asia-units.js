@@ -44,7 +44,15 @@ const eastAsiaChineseSupportArt={
 };
 const EAST_ASIA_CHINESE_SUPPORT={};
 for(const [type,name] of [[8,'grenadier'],[9,'antitank'],[10,'machinegun']])EAST_ASIA_CHINESE_SUPPORT[type]=chineseInfantryProfile(type,eastAsiaChineseSupportArt[type],'cn-'+name);
-infantryArtProfile=function(u){return u.type===0?EAST_ASIA_RIFLES[u.f]||null:(u.f===0?EAST_ASIA_SUPPORT:u.f===1?EAST_ASIA_CHINESE_SUPPORT:u.f===2?EAST_ASIA_JAPANESE_SUPPORT:{})[u.type]||null};
+// North Korean source art faces left. Preserve source bytes and native mirroring.
+const EAST_ASIA_NK_MUZZLE_PIXELS={0:[[21,346],[430,222],[836,378]],8:[[42,106],[467,52],[926,106]],9:[[28,315],[424,202],[905,315]],10:[[24,405]]};
+const EAST_ASIA_NORTH_KOREAN_INFANTRY={};
+for(const [type,name] of [[0,'rifle'],[8,'grenadier'],[9,'antitank'],[10,'machinegun']]){
+ const source='nk-'+name,fire=EAST_ASIA_UNIT_BOUNDS[source+(type===10?'':'-fire')],idle=EAST_ASIA_UNIT_BOUNDS[source+(type===10?'':'-idle')];
+ const width=48*fire.width/fire.height;
+ EAST_ASIA_NORTH_KOREAN_INFANTRY[type]={art:loadBaekArt(idle.file,fire.file),source,baseFacing:-1,width,idleWidth:48*idle.width/idle.height,height:48,highResolution:true,muzzles:EAST_ASIA_NK_MUZZLE_PIXELS[type].map(([x,y])=>({x:(x/fire.width-.5)*width,y:14-48+y/fire.height*48})),...(type===8?{projectile:'baekGrenade',flashAngle:.65}:type===9?{projectile:'baekRocket'}:type===10?{burst:true}:{})};
+}
+infantryArtProfile=function(u){return u.f===3?EAST_ASIA_NORTH_KOREAN_INFANTRY[u.type]||null:u.type===0?EAST_ASIA_RIFLES[u.f]||null:(u.f===0?EAST_ASIA_SUPPORT:u.f===1?EAST_ASIA_CHINESE_SUPPORT:u.f===2?EAST_ASIA_JAPANESE_SUPPORT:{})[u.type]||null};
 const eastAsiaTankArt={
  '0:1':loadBaekArt('eastasia-kr-tank.png'),
  '0:14':loadBaekArt('eastasia-kr-elite.png'),
@@ -80,12 +88,12 @@ combatImpactProfile=function(u){return eastAsiaImpactSound(u.f===2&&[1,13,14].in
 Object.assign(window.Terha,{infantryArtProfile,isBaekTank,isStetopiaTank,baekTankProfile,combatWeaponProfile,combatImpactProfile});
 // Compile the original hit/ground lookup layout from offline opaque bounds.
 // Every formation tier shares the same anchored art, as in Terha.
-for(const f of [0,1,2])for(const type of (f===1?[0,8,9,10]:[0,1,8,9,10,14])){
+for(const f of [0,1,2,3])for(const type of (f===1||f===3?[0,8,9,10]:[0,1,8,9,10,14])){
  const key=f+':'+type,hits=[],feet=[];
  for(const firing of [false,true])for(let direction=0;direction<16;direction++){
   const facing=Math.cos(direction*Math.PI/8)<0?-1:1;
   const profile=infantryArtProfile({f,type});
-  const name=profile&&type!==0?profile.source+(type===10?'':'-'+(firing?'fire':'idle')):(f===0?'kr':f===1?'cn':'jp')+'-'+(type===0?'rifle-'+(firing?'fire':'idle'):type===1?'tank':'elite');
+  const name=profile?.source?profile.source+(type===10?'':'-'+(firing?'fire':'idle')):(f===0?'kr':f===1?'cn':'jp')+'-'+(type===0?'rifle-'+(firing?'fire':'idle'):type===1?'tank':'elite');
   const source=EAST_ASIA_UNIT_BOUNDS[name],opaque=source.opaqueBounds;
   let b=opaque,w,h,scale,flip,box;
   if(profile){const p=profile;w=!firing&&p.idleWidth||p.width;h=p.height;scale=1;flip=facing!==(p.baseFacing??-1);box={x:-w/2,y:infantryArtBottom(p,firing)-h}}

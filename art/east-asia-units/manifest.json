@@ -351,5 +351,96 @@
       1081
     ],
     "sha256": "ecdf2bca69203fc35078bb4848829d2dfcc944596a0d6462ca7f94f0a1950866"
+  },
+  "nk-rifle-idle": {
+    "file": "eastasia-nk-rifle-idle.webp",
+    "uploadedName": "1000068855.webp",
+    "width": 1448,
+    "height": 1086,
+    "opaqueBounds": [
+      45,
+      31,
+      1398,
+      1072
+    ],
+    "sha256": "13193ae2d7b8a9a11df5b4f8ea7acaae53627d47a578899f4dad2c0270dcbf8e"
+  },
+  "nk-rifle-fire": {
+    "file": "eastasia-nk-rifle-fire.webp",
+    "uploadedName": "1000068856.webp",
+    "width": 1448,
+    "height": 1086,
+    "opaqueBounds": [
+      15,
+      71,
+      1433,
+      1056
+    ],
+    "sha256": "4f472ecb5cb0377cf82b9bd5e0d6e1ea31da7bf3fab3f2b39616dd8191ef47d4"
+  },
+  "nk-grenadier-idle": {
+    "file": "eastasia-nk-grenadier-idle.webp",
+    "uploadedName": "1000068857.webp",
+    "width": 1448,
+    "height": 1086,
+    "opaqueBounds": [
+      19,
+      10,
+      1430,
+      1070
+    ],
+    "sha256": "fe8c8e5c544f08d98ae433ed5b43007c67239aa14060bb2e1893bd90e3710e29"
+  },
+  "nk-grenadier-fire": {
+    "file": "eastasia-nk-grenadier-fire.webp",
+    "uploadedName": "1000068858.webp",
+    "width": 1448,
+    "height": 1086,
+    "opaqueBounds": [
+      22,
+      30,
+      1436,
+      1071
+    ],
+    "sha256": "e7734c1824c730a1176ebd1ebf17e00b814c41cb15d34e49496a5bc2e2132020"
+  },
+  "nk-antitank-idle": {
+    "file": "eastasia-nk-antitank-idle.webp",
+    "uploadedName": "1000068859.webp",
+    "width": 1448,
+    "height": 1086,
+    "opaqueBounds": [
+      24,
+      23,
+      1424,
+      1067
+    ],
+    "sha256": "9dc5124f4f140d66d56c47355da61d5df2a14b4d223f250c7e5942c3c3654eca"
+  },
+  "nk-antitank-fire": {
+    "file": "eastasia-nk-antitank-fire.webp",
+    "uploadedName": "1000068860.webp",
+    "width": 1448,
+    "height": 1086,
+    "opaqueBounds": [
+      16,
+      70,
+      1438,
+      1043
+    ],
+    "sha256": "999bc395292da735c34227ba2c1ce9c33e20a67ec0304bcaf107c89c6447d4ec"
+  },
+  "nk-machinegun": {
+    "file": "eastasia-nk-machinegun.webp",
+    "uploadedName": "1000068861.webp",
+    "width": 1448,
+    "height": 1086,
+    "opaqueBounds": [
+      8,
+      70,
+      1440,
+      1055
+    ],
+    "sha256": "7e21fecb935a26afe0872861acecbfa4b10d237062257e94f685d99190c6271e"
   }
 }
