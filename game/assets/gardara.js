@@ -81,7 +81,9 @@ isBaekArtillery=function(u){return u.f===GARDARA&&u.type===2||gardaraArtilleryCh
 baekArtilleryProfile=function(u,firing=false){if(u.f!==GARDARA||u.type!==2)return gardaraSPProfile(u,firing);const art=gardaraArtilleryArt,image=art[firing?'fire':'idle'],w=image.naturalWidth||1672,h=image.naturalHeight||941;return{art,w,h,mx:firing?72:27,my:firing?57:365,baseFacing:-1,flashAngle:.44}};
 const gardaraPreviousSprite=sprite;
 sprite=function(u,p,now){
- if(u.f!==GARDARA||[1,14,2].includes(u.type)||TYPES[u.type].branch==='infantry'&&u.type!==11)return gardaraPreviousSprite(u,p,now);
+ // East Asia's Menremoi variant keeps country ID 3, but uses this exact Gardara renderer.
+ const gardaraVisual=u.f===GARDARA||u.f===3&&typeof eastAsiaVersion!=='undefined'&&eastAsiaVersion==='menremoi';
+ if(!gardaraVisual||[1,14,2].includes(u.type)||TYPES[u.type].branch==='infantry'&&u.type!==11)return gardaraPreviousSprite(u,p,now);
  if(isNaval(u)){p=unitVisualPosition(u,now);ctx.save();ctx.translate(p.x,p.y-3);drawShip(u,weaponAngle(u,now),-1);if(cam.z>.55){rect(-25,21,50,5,'#12211c');rect(-24,22,48*Math.max(0,u.hp/unitMaxHp(u)),3,factions[u.f].color)}ctx.restore();return}
  const branch=TYPES[u.type].branch,art=gardaraOtherVehicleArt[u.type]||(branch==='armor'?gardaraTankArt:branch==='artillery'?gardaraArtilleryArt:null);
  if(!art?.idleReady)return gardaraPreviousSprite(u,p,now);

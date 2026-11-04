@@ -64,6 +64,7 @@ const EAST_ASIA_VERSIONS={normal:'노멀',menremoi:'멘레모이 혁명','blue-p
 const EAST_ASIA_GARDARA_COLOR='#80a9bb'; // Most frequent blue pixel in Terha's original flag.
 const eastAsiaOriginalSelectable=[...MAP.selectableFactions];
 const eastAsiaOriginalNorth={...factions[3]};
+const eastAsiaOriginalNorthArmoredArt=armoredCarArt[3],eastAsiaOriginalNorthArmoredProfile=ARMORED_CAR_PROFILES[3];
 const eastAsiaNorthFlag=flagImages[3],eastAsiaGardaraFlag=new Image();
 eastAsiaGardaraFlag.src='eastasia-gardara-flag.jpg';
 function eastAsiaVersionLabel(id){return EAST_ASIA_VERSIONS[id]||EAST_ASIA_VERSIONS.normal}
@@ -77,9 +78,11 @@ function eastAsiaSelectVersion(id){
  eastAsiaVersion=Object.hasOwn(EAST_ASIA_VERSIONS,id)?id:'normal';
  Object.assign(factions[3],eastAsiaOriginalNorth);
  flagImages[3]=eastAsiaNorthFlag;
+ armoredCarArt[3]=eastAsiaOriginalNorthArmoredArt;ARMORED_CAR_PROFILES[3]=eastAsiaOriginalNorthArmoredProfile;
  if(eastAsiaVersion==='menremoi'){
   Object.assign(factions[3],{name:'가르다라',desc:'가르다라',color:EAST_ASIA_GARDARA_COLOR});
   flagImages[3]=eastAsiaGardaraFlag;
+  armoredCarArt[3]=armoredCarArt[GARDARA];ARMORED_CAR_PROFILES[3]=ARMORED_CAR_PROFILES[GARDARA];
  }
  NATURAL_OWNERSHIP_COLORS[3]=factions[3].color;
  MAP.selectableFactions=eastAsiaOriginalSelectable.filter(f=>eastAsiaVersion!=='blue-plum-2'||f!==3);
@@ -133,12 +136,12 @@ function gardaraTankProfileForEastAsia(u){
  return{art,image,w,h,mx:w*.99,my:h*(u.type===14?.42:.49),flip:baekTankFacing(u)!==1};
 }
 const eastAsiaVersionSPCheck=isBaekArtillery,eastAsiaVersionSPProfile=baekArtilleryProfile;
-isBaekArtillery=function(u){return eastAsiaVersion==='menremoi'&&u.f===3&&u.type===2||eastAsiaVersionSPCheck(u)};
+isBaekArtillery=function(u){return eastAsiaVersion==='menremoi'&&u.f===3?u.type===2:eastAsiaVersionSPCheck(u)};
 baekArtilleryProfile=function(u,firing=false){
  if(eastAsiaVersion!=='menremoi'||u.f!==3||u.type!==2)return eastAsiaVersionSPProfile(u,firing);
  const art=gardaraArtilleryArt,image=art[firing?'fire':'idle'],w=image.naturalWidth||1672,h=image.naturalHeight||941;
  return{art,w,h,mx:firing?72:27,my:firing?57:365,baseFacing:-1,flashAngle:.44};
 };
 const eastAsiaVersionHasArt=eastAsiaUnitHasArt;
-eastAsiaUnitHasArt=function(u){return eastAsiaVersion==='menremoi'&&u.f===3&&u.type===2||eastAsiaVersionHasArt(u)};
+eastAsiaUnitHasArt=function(u){return eastAsiaVersion==='menremoi'&&u.f===3||eastAsiaVersionHasArt(u)};
 Object.assign(window.Terha,{setup,snapshot,load,migrateArmy,showStart,showEastAsiaVersions,eastAsiaSelectVersion,infantryArtProfile,isBaekTank,baekTankProfile,isBaekArtillery,baekArtilleryProfile,eastAsiaUnitHasArt});

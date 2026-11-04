@@ -3,5 +3,41 @@
   "commit": "10ffc7f7d16791b74a922f522eca19030de43d3f",
   "flag": "flag-7.jpg",
   "blue": "#80a9bb",
-  "note": "Original Gardara unit PNGs already retained byte-for-byte in this repository; original flag copied without conversion by release workflow."
+  "note": "Original Gardara renderer and its actual shared unit image references; files preserved without conversion.",
+  "sharedUnitFiles": [
+    "baek-motorized-right.png",
+    "baek-armored-car.webp",
+    "baek-tank-light.png",
+    "baek-ml-idle.png",
+    "baek-ml-fire.png",
+    "baek-mortar-idle.png",
+    "baek-towed-idle.png"
+  ],
+  "sha256": {
+    "baek-armored-car.webp": "bffd2168f321d7a0c8c75078de75599f4f53e99d299094d0aef6b6a79f76a854",
+    "baek-ml-fire.png": "51da3a217baa898940922854430e7f9e11c4181ab0ce1dc36b581adc0478f0fa",
+    "baek-ml-idle.png": "0d853c0e2cff5b7b385c2c4a916a6b399308cf94101256cee0ddd3a79319dfdd",
+    "baek-mortar-idle.png": "ef5893a0eea58a2fa5a88b93825d54af0d3f0075b33554ee0b27ba21da49205a",
+    "baek-motorized-right.png": "92c76f71e004e6dbb178c2846e336bbe37045a1a8d231017c84fe6e9671f7ffe",
+    "baek-tank-light.png": "d65cfb2f9b45e6f6c14809219df97ab79dd0f682af08d169710a0479b4c1eff5",
+    "baek-towed-idle.png": "4770206619a567f7d4543ddd85074b6021cfc80787fc35f58e08ca5bbda90258",
+    "gardara-antitank-fire.png": "67d828aabeb30d8deef3e16dafb0972c7615a7258e9e9a690c8c54f996a799e9",
+    "gardara-antitank-idle.png": "d1c4b1831912c3034209f1efb8742f2ba8850c0ce28a0949a4c0e6b2597b30e1",
+    "gardara-artillery-fire.png": "f5ba8cc6f0f96f956044e07a09e132bfb3bd308f26607591e17dc6b1dfb6dbf8",
+    "gardara-artillery.png": "4cb0fd940c5457954b3fbdbe46bad6804d41fc4a73c32b70ae329892628be919",
+    "gardara-city-3.png": "9fb67ba0f3dbdfb0fa7b8ec155695ac666a843390203d861d3dbc18536bd1b70",
+    "gardara-city-4.png": "58f464f47de8c99a435df856667752bd12dacf92c4e59d6118c936c52ef4b68e",
+    "gardara-city-5.png": "4cfacc488e6c2def041727dc4cd3e08a175fb3633d0572b9165cd73b3f1644ad",
+    "gardara-city-capital.png": "27f4a911852c073a96467c319b8c192a7fe9d4744e3ddb2cae5b6254909e22c1",
+    "gardara-city-small.png": "ebf0153196e37192bf883b253f69e089752485f6d7db6a013f39d3e9e3fd0542",
+    "gardara-elite.png": "1d8e9130d0b91468298bbc1cb0c12a940b9605d3bcaa706bac74aa131c00ac29",
+    "gardara-grenadier-fire.png": "c856f30188bcf39f8222bdb00a92daa6fa8ac2fa56b4e04de8304ac01bd9061f",
+    "gardara-grenadier-idle.png": "cf469868f02ccd41ff67a0f410587975d8c75350b6ea1438768ea40b9f3ee791",
+    "gardara-guard-fire.webp": "47e7358157e86af7c2f6e1b7106a9735ba1de58d9c30b9460ce6818e4506c409",
+    "gardara-guard-idle.webp": "bba25dd5d90bb56e083fbe71ea221617ec0732efd42d896879b611ac28dfcbab",
+    "gardara-machinegun.png": "758d96775c975ce3bbbf73913d355b985a06eb24b4c797244a4d02a3ba05a0a5",
+    "gardara-rifle-fire.png": "b7cf9a9e7d827ee0b601ef69e61963e92d358d8d658d4e77568c48bbb06af427",
+    "gardara-rifle-idle.png": "e0e6637054de30ebfaed721db743ac8c0a8ba1fbbe1fcea7c13bc2b9dcd70b45",
+    "gardara-tank.png": "67b8a720cb0d1db22e1063808c3ae594758570e17b7ce0893d1e4707fa9f65ea"
+  }
 }
