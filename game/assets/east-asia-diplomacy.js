@@ -1,4 +1,5 @@
 'use strict';
+let eastAsiaVersion='normal';
 const EAST_ASIA_UNIFICATION_COST=30000;
 // This immutable founding roster includes northern cities held by ANY occupier.
 const EAST_ASIA_NORTH_CITY_TILES=new Set(MAP.countryCities[3].map(q=>q.tile));
@@ -7,17 +8,17 @@ const eastAsiaKoreanFlag=new Image(),eastAsiaGoryeoFlag=new Image();
 eastAsiaKoreanFlag.src='flag-0.png';eastAsiaGoryeoFlag.src='eastasia-goryeo-flag.png';
 function eastAsiaFreshDiplomacyState(){return{schema:1,chinaIntervened:false,japanMobilized:false,unificationAvailable:false,unified:false}}
 let eastAsiaDiplomacyState=eastAsiaFreshDiplomacyState(),eastAsiaRallySites=null;
-function eastAsiaKoreanScenario(){return player===0&&!activeScenario}
+function eastAsiaKoreanScenario(){return eastAsiaVersion==='normal'&&player===0&&!activeScenario}
 function eastAsiaNorthCities(){return cities.filter(q=>q.origin===3||EAST_ASIA_NORTH_CITY_TILES.has(q.tile)||q.eastAsiaFoundingOrigin===3)}
 function eastAsiaOwnsAllNorth(){const original=eastAsiaNorthCities();return original.length===EAST_ASIA_NORTH_CITY_TILES.size&&original.every(q=>q.f===0)}
 function eastAsiaInitialDiplomacy(){
  const result=factions.map((_,a)=>factions.map((_,b)=>a===b?'self':'neutral'));
- result[0][3]=result[3][0]='war';result[1][3]=result[3][1]='ally';return result;
+ if(eastAsiaVersion!=='blue-plum-2'){result[0][3]=result[3][0]='war';result[1][3]=result[3][1]='ally';}return result;
 }
-function eastAsiaFlagPath(f){return f===0&&eastAsiaKoreanScenario()&&eastAsiaDiplomacyState.unified?'eastasia-goryeo-flag.png':'flag-'+f+(f===7?'.jpg':[3,6].includes(f)?'.svg':'.png')}
+function eastAsiaFlagPath(f){if(eastAsiaVersion==='menremoi'&&f===3)return 'eastasia-gardara-flag.jpg';return f===0&&eastAsiaKoreanScenario()&&eastAsiaDiplomacyState.unified?'eastasia-goryeo-flag.png':'flag-'+f+(f===7?'.jpg':[3,6].includes(f)?'.svg':'.png')}
 function eastAsiaApplyIdentity(){
  const unified=eastAsiaKoreanScenario()&&eastAsiaDiplomacyState.unified;
- factions[0].name=unified?'고려연방':eastAsiaBaseKoreanName;
+ factions[0].name=unified?'고려연방':eastAsiaVersion==='blue-plum-2'?'대한조선국':eastAsiaBaseKoreanName;
  flagImages[0]=unified?eastAsiaGoryeoFlag:eastAsiaKoreanFlag;
 }
 function eastAsiaWar(a,b,notify=true){

@@ -1,0 +1,34 @@
+'use strict';
+const fs=require('fs'),path=require('path');
+const source=fs.readFileSync(path.join(__dirname,'east-asia.cjs'),'utf8');
+const prefix=source.slice(0,source.indexOf('\n(async()=>{'));
+new Function('require','__dirname',prefix+`
+(async()=>{
+ await settle();run('showBattlefield()');await click('conquestMode');
+ for(const id of ['normal','menremoi','blue-plum-2'])assert(nodes.get('version-'+id));
+ await click('version-menremoi');assert.equal(nodes.get('factions').children.length,6);
+ assert.equal(run('factions[3].name'),'가르다라');assert.equal(run('factions[3].color'),'#80a9bb');
+ assert.equal(run('eastAsiaFlagPath(3)'),'eastasia-gardara-flag.jpg');
+ run('player=3;setup();started=true;setAppScreen("game")');await settle();
+ assert.equal(run('cities.filter(q=>q.f===3).length'),14);
+ assert(run('infantryArtProfile({f:3,type:0})===GARDARA_INFANTRY_PROFILES[0]'));
+ assert(run('baekTankProfile({f:3,type:1}).art===gardaraTankArt'));
+ assert(run('baekArtilleryProfile({f:3,type:2}).art===gardaraArtilleryArt'));
+ assert(run('eastAsiaUnitHasArt({f:3,type:2})'));
+ run('draw(performance.now());save(1);showSaveSlots("menu")');await settle();
+ assert(nodes.get('modal').textContent.includes('멘레모이 혁명'));assert(nodes.get('modal').textContent.includes('가르다라'));
+ run('eastAsiaSelectVersion("blue-plum-2");player=0;setup();started=true;setAppScreen("game")');await settle();
+ assert.equal(run('MAP.selectableFactions.length'),5);assert.equal(run('factions[0].name'),'대한조선국');
+ assert(!run('cities.some(q=>q.f===3)||units.some(u=>u.f===3)'));
+ assert.equal(run('cities.filter(q=>q.f===0).length'),37);assert(run('cities.filter(q=>q.f===0).every(q=>q.origin===0&&!occupiedCity(q))')); assert.equal(run('cities.filter(q=>q.f===0&&q.capital).length'),1);
+ assert.equal(run('tiles.filter(t=>t.owner>=0).length'),3672);assert(!run('tiles.some(t=>t.owner===3)'));
+ assert(!run('eastAsiaKoreanScenario()||eastAsiaDiplomacyState.unificationAvailable'));assert.equal(run('eastAsiaFlagPath(0)'),'flag-0.png');
+ run('draw(performance.now());save(2);showSaveSlots("menu")');await settle();
+ for(const name of ['푸른 오얏꽃2','대한조선국','멘레모이 혁명','가르다라'])assert(nodes.get('modal').textContent.includes(name));
+ assert(await drain(run('load(1)')));assert.equal(run('eastAsiaVersion'),'menremoi');assert.equal(run('player'),3);assert.equal(run('factions[3].name'),'가르다라');
+ assert(await drain(run('load(2)')));assert.equal(run('eastAsiaVersion'),'blue-plum-2');assert(!run('cities.some(q=>q.f===3)||tiles.some(t=>t.owner===3)'));
+ run('eastAsiaSelectVersion("normal");player=0;setup();started=true;save(3);const old=readSave(3);delete old.eastAsiaVersion;localStorage.setItem(saveKey(3),JSON.stringify(old));');
+ assert(await drain(run('load(3)')));assert.equal(run('eastAsiaVersion'),'normal');assert.equal(run('factions[0].name'),'대한민국');assert.equal(run('factions[3].name'),'조선민주주의인민공화국');assert.equal(run('MAP.selectableFactions.length'),6);assert(run('eastAsiaKoreanScenario()&&atWar(0,3)'));
+ console.log('PASS conquest version menu, original Gardara art/flag blue, united peninsula, mixed slots, cross-version restore and legacy saves');
+})().catch(e=>{console.error(e);process.exit(1)});
+`)(require,__dirname);

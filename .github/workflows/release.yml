@@ -1,4 +1,4 @@
-name: 외교·고려연방 통일·자주포 상향 시점 v1.2.12 릴리스
+name: 정복 시나리오 3종·가르다라·대한조선국 v1.2.13 릴리스
 on:
   push:
     branches: [main]
@@ -16,12 +16,25 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
+      - name: Import original Gardara flag without conversion
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          curl --fail --location --retry 3 'https://raw.githubusercontent.com/kminj0224/terha-conquest/10ffc7f7d16791b74a922f522eca19030de43d3f/game/assets/flag-7.jpg' -o game/assets/eastasia-gardara-flag.jpg
+          python3 -c "import hashlib; assert hashlib.sha256(open('game/assets/eastasia-gardara-flag.jpg','rb').read()).hexdigest() == '9b039122e84fef69e6136bf4ec10df29d0434d2b98d83b476fbaab64d06e0985'"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add game/assets/eastasia-gardara-flag.jpg
+          if ! git diff --cached --quiet; then
+            git commit -m 'Import byte-exact original Terha Gardara flag'
+            git push origin HEAD:main
+          fi
       - name: Check requested version and immutable release target
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          python3 -c "import json; assert json.load(open('release-request.json'))['version'] == json.load(open('package.json'))['version'] == '1.2.12'"
-          if gh release view v1.2.12 >/dev/null 2>&1; then exit 1; fi
+          python3 -c "import json; assert json.load(open('release-request.json'))['version'] == json.load(open('package.json'))['version'] == '1.2.13'"
+          if gh release view v1.2.13 >/dev/null 2>&1; then exit 1; fi
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -55,7 +68,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: East-Asia-Conquest-v1212-checks
+          name: East-Asia-Conquest-v1213-checks
           path: |
             qa/east-asia-previews/*
             deliverables/*
@@ -65,4 +78,4 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           SOURCE_SHA: ${{ github.sha }}
         run: |
-          gh release create v1.2.12 deliverables/East-Asia-Conquest-v1.2.12.apk deliverables/SHA256SUMS.txt --target "$SOURCE_SHA" --title '동아시아 콘퀘스트 v1.2.12 — 외교·고려연방 통일·자주포 상향 시점' --notes-file docs/releases/v1.2.12.md
+          gh release create v1.2.13 deliverables/East-Asia-Conquest-v1.2.13.apk deliverables/SHA256SUMS.txt --target "$(git rev-parse HEAD)" --title '동아시아 콘퀘스트 v1.2.13 — 정복 시나리오 3종·가르다라·대한조선국' --notes-file docs/releases/v1.2.13.md

@@ -58,3 +58,87 @@ migrateArmy=function(s){for(const q of s.cities)if(q.queue?.type===13)q.queue.ty
 Object.assign(window.Terha,{migrateArmy});
 
 installEastAsiaDiplomacy();
+
+// Conquest variants share geography, stable country/type IDs and the save archive.
+const EAST_ASIA_VERSIONS={normal:'노멀',menremoi:'멘레모이 혁명','blue-plum-2':'푸른 오얏꽃2'};
+const EAST_ASIA_GARDARA_COLOR='#80a9bb'; // Most frequent blue pixel in Terha's original flag.
+const eastAsiaOriginalSelectable=[...MAP.selectableFactions];
+const eastAsiaOriginalNorth={...factions[3]};
+const eastAsiaNorthFlag=flagImages[3],eastAsiaGardaraFlag=new Image();
+eastAsiaGardaraFlag.src='eastasia-gardara-flag.jpg';
+function eastAsiaVersionLabel(id){return EAST_ASIA_VERSIONS[id]||EAST_ASIA_VERSIONS.normal}
+function eastAsiaSavedNation(s){
+ const version=s.eastAsiaVersion||'normal';
+ if(version==='menremoi'&&s.player===3)return '가르다라';
+ if(s.player===0)return version==='blue-plum-2'?'대한조선국':s.eastAsiaDiplomacyState?.unified?'고려연방':eastAsiaBaseKoreanName;
+ return s.player===3?eastAsiaOriginalNorth.name:factions[s.player].name;
+}
+function eastAsiaSelectVersion(id){
+ eastAsiaVersion=Object.hasOwn(EAST_ASIA_VERSIONS,id)?id:'normal';
+ Object.assign(factions[3],eastAsiaOriginalNorth);
+ flagImages[3]=eastAsiaNorthFlag;
+ if(eastAsiaVersion==='menremoi'){
+  Object.assign(factions[3],{name:'가르다라',desc:'가르다라',color:EAST_ASIA_GARDARA_COLOR});
+  flagImages[3]=eastAsiaGardaraFlag;
+ }
+ NATURAL_OWNERSHIP_COLORS[3]=factions[3].color;
+ MAP.selectableFactions=eastAsiaOriginalSelectable.filter(f=>eastAsiaVersion!=='blue-plum-2'||f!==3);
+ if(!MAP.selectableFactions.includes(player))player=0;
+ eastAsiaApplyIdentity();territoryDirty=true;
+}
+function showEastAsiaVersions(){
+ if(busy)return;
+ setAppScreen('versions');
+ $('modal').innerHTML='<div class="box"><div class="eyebrow">EAST ASIA CONQUEST</div><h1 class="menuTitle">정복</h1><div class="modeButtons">'+Object.entries(EAST_ASIA_VERSIONS).map(([id,label])=>'<button id="version-'+id+'">'+label+'</button>').join('')+'</div><button id="versionsBack">'+tr('뒤로','BACK')+'</button></div>';
+ for(const id of Object.keys(EAST_ASIA_VERSIONS))$('version-'+id).onclick=()=>{started=false;eastAsiaDiplomacyState=eastAsiaFreshDiplomacyState();eastAsiaSelectVersion(id);showStart()};
+ $('versionsBack').onclick=showBattlefield;
+}
+const eastAsiaVersionStart=showStart;
+showStart=function(...args){eastAsiaSelectVersion(eastAsiaVersion);const result=eastAsiaVersionStart(...args);$('countryBack').onclick=showEastAsiaVersions;return result};
+const eastAsiaVersionSetup=setup;
+setup=function(...args){
+ eastAsiaSelectVersion(eastAsiaVersion);
+ const result=eastAsiaVersionSetup(...args);
+ if(eastAsiaVersion==='blue-plum-2'){
+  for(const q of cities)if(q.f===3){q.f=0;q.eastAsiaFoundingOrigin=3;q.origin=0;q.capital=false;}
+  for(const u of units)if(u.f===3)u.f=0;
+  defeatedNotices.add(3);diplomacy=eastAsiaInitialDiplomacy();buildRegions();faceInitialArmy();
+ }
+ focusCapital();updateHUD();save();return result;
+};
+const eastAsiaVersionSnapshot=snapshot;
+snapshot=function(){return{...eastAsiaVersionSnapshot(),eastAsiaVersion}};
+const eastAsiaVersionLoad=load;
+load=async function(slot=0){
+ const s=readSave(slot);if(!s)return false;
+ const previous=eastAsiaVersion;
+ eastAsiaSelectVersion(s.eastAsiaVersion||'normal');
+ const ok=await eastAsiaVersionLoad(slot);
+ if(!ok)eastAsiaSelectVersion(previous);
+ return ok;
+};
+const eastAsiaVersionMigration=migrateArmy;
+migrateArmy=function(s){eastAsiaSelectVersion(s.eastAsiaVersion||'normal');return eastAsiaVersionMigration(s)};
+// Reuse Terha's original Gardara profiles on the replacement country ID.
+const eastAsiaVersionInfantry=infantryArtProfile;
+infantryArtProfile=function(u){return eastAsiaVersion==='menremoi'&&u.f===3?GARDARA_INFANTRY_PROFILES[u.type]||null:eastAsiaVersionInfantry(u)};
+const eastAsiaVersionTankCheck=isBaekTank,eastAsiaVersionTankProfile=baekTankProfile;
+isBaekTank=function(u){return eastAsiaVersion==='menremoi'&&u.f===3&&[1,14].includes(u.type)||eastAsiaVersionTankCheck(u)};
+baekTankProfile=function(u){
+ if(eastAsiaVersion!=='menremoi'||u.f!==3||![1,14].includes(u.type))return eastAsiaVersionTankProfile(u);
+ return gardaraTankProfileForEastAsia(u);
+};
+function gardaraTankProfileForEastAsia(u){
+ const art=u.type===14?gardaraEliteArt:gardaraTankArt,image=art.idle,w=image.naturalWidth||1448,h=image.naturalHeight||1086;
+ return{art,image,w,h,mx:w*.99,my:h*(u.type===14?.42:.49),flip:baekTankFacing(u)!==1};
+}
+const eastAsiaVersionSPCheck=isBaekArtillery,eastAsiaVersionSPProfile=baekArtilleryProfile;
+isBaekArtillery=function(u){return eastAsiaVersion==='menremoi'&&u.f===3&&u.type===2||eastAsiaVersionSPCheck(u)};
+baekArtilleryProfile=function(u,firing=false){
+ if(eastAsiaVersion!=='menremoi'||u.f!==3||u.type!==2)return eastAsiaVersionSPProfile(u,firing);
+ const art=gardaraArtilleryArt,image=art[firing?'fire':'idle'],w=image.naturalWidth||1672,h=image.naturalHeight||941;
+ return{art,w,h,mx:firing?72:27,my:firing?57:365,baseFacing:-1,flashAngle:.44};
+};
+const eastAsiaVersionHasArt=eastAsiaUnitHasArt;
+eastAsiaUnitHasArt=function(u){return eastAsiaVersion==='menremoi'&&u.f===3&&u.type===2||eastAsiaVersionHasArt(u)};
+Object.assign(window.Terha,{setup,snapshot,load,migrateArmy,showStart,showEastAsiaVersions,eastAsiaSelectVersion,infantryArtProfile,isBaekTank,baekTankProfile,isBaekArtillery,baekArtilleryProfile,eastAsiaUnitHasArt});

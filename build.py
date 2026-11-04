@@ -2,7 +2,7 @@
 """Repackage the retained Android shell with current game assets and original signing key."""
 import pathlib,zipfile,struct,subprocess,os,urllib.request
 ROOT=pathlib.Path(__file__).resolve().parent;os.chdir(ROOT)
-VERSION='1.2.12';CODE=17
+VERSION='1.2.13';CODE=18
 subprocess.run(['python3','tools/prepare_operation_music.py'],check=True)
 T=ROOT/'tools';T.mkdir(exist_ok=True)
 for name,url in [('ecj.jar','https://repo.maven.apache.org/maven2/org/eclipse/jdt/ecj/3.33.0/ecj-3.33.0.jar'),('apksig.jar','https://repo.maven.apache.org/maven2/com/android/tools/build/apksig/2.3.0/apksig-2.3.0.jar')]:
@@ -46,7 +46,7 @@ def packaged_assets():
  images.update(['battlefield-effects.webp','city-flame-soft.webp','wreck-smoke.webp','explosion-sequence.webp','smoke-flow.webp','dirt-sequence.webp','combat-projectiles.webp','nuclear-cloud.webp'])
  images.update('flag-'+str(f)+ext for f in range(8) for ext in ['.png','.svg','.jpg'])
  images.update(['campaign-loading.png','campaign-loading-baek.jpg','campaign-loading-guerrillas.jpg','campaign-loading-artillery.png','campaign-loading-bomber.png'])
- return [p for p in pathlib.Path('game/assets').iterdir() if p.suffix.lower() not in ['.png','.jpg','.webp','.svg'] or p.name in images or p.name.startswith(('natural-detail-','natural-mid-','eastasia-'))]
+ return [p for p in pathlib.Path('game/assets').iterdir() if p.suffix.lower() not in ['.png','.jpg','.webp','.svg'] or p.name in images or p.name.startswith(('natural-detail-','natural-mid-','eastasia-','gardara-'))]
 with zipfile.ZipFile('android/native-shell.zip') as base,zipfile.ZipFile('android/build/aligned.apk','w') as out:
  entries=[(i,base.read(i)) for i in base.infolist()]
  for p in sorted(packaged_assets()):
